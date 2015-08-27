@@ -1,0 +1,10 @@
+--TEST--
+"feature" tag
+--TEMPLATE--
+{% feature "featureA" from "group" %}
+  {{ a }}
+{% endfeature %}
+--DATA--
+return array('a' => 'a')
+--EXPECT--
+  a

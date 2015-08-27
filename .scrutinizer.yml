@@ -1,0 +1,17 @@
+inherit: true
+checks:
+    php: true
+filter:
+    excluded_paths:
+        - 'vendor/*'
+        - 'Tests/*'
+build:
+    environment:
+        php: '5.5.25'
+    tests:
+        override:
+            -
+                command: 'phpunit --coverage-clover=coverage'
+                coverage:
+                    file: 'coverage'
+                    format: 'php-clover'

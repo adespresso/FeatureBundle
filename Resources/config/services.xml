@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="cw_feature.manager.class">Ae\FeatureBundle\Entity\FeatureManager</parameter>
+        <parameter key="cw_feature.security.class">Ae\FeatureBundle\Security\FeatureSecurity</parameter>
+        <parameter key="cw_feature.feature.class">Ae\FeatureBundle\Service\Feature</parameter>
+        <parameter key="cw_feature.twig.extension.feature.class">Ae\FeatureBundle\Twig\Extension\FeatureExtension</parameter>
+    </parameters>
+
+    <services>
+        <service id="cw_feature.manager" class="%cw_feature.manager.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="cw_feature.security" class="%cw_feature.security.class%" public="false">
+            <argument type="service" id="security.context"  />
+        </service>
+
+        <service id="cw_feature.feature" class="%cw_feature.feature.class%">
+            <argument type="service" id="cw_feature.manager" />
+            <argument type="service" id="cw_feature.security" />
+        </service>
+
+        <service id="cw_feature.twig.extension.feature" class="%cw_feature.twig.extension.feature.class%" public="false">
+            <tag name="twig.extension" />
+            <argument type="service" id="cw_feature.feature" />
+        </service>
+    </services>
+</container>
