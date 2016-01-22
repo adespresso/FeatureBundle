@@ -30,9 +30,9 @@ class FeatureNodeTest extends \Twig_Test_NodeTestCase
      * @covers Ae\FeatureBundle\Twig\Node\FeatureNode::compile
      * @dataProvider getTests
      */
-    public function testCompile($node, $source, $environment = null)
+    public function testCompile($node, $source, $environment = null, $isPattern = null)
     {
-        parent::testCompile($node, $source, $environment);
+        parent::testCompile($node, $source, $environment, $isPattern);
     }
 
     public function getTests()

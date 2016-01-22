@@ -9,6 +9,23 @@ use Ae\FeatureBundle\Twig\Extension\FeatureExtension;
  */
 class IntegrationTest extends \Twig_Test_IntegrationTestCase
 {
+    protected static $originalErrorLevel;
+
+    public function __construct($name = null, array $data = array(), $dataName = '')
+    {
+        self::$originalErrorLevel = error_reporting();
+        error_reporting(self::$originalErrorLevel & ~E_WARNING);
+
+        parent::__construct($name, $data, $dataName);
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+
+        error_reporting(self::$originalErrorLevel);
+    }
+
     public function getExtensions()
     {
         return array(

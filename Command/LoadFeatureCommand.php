@@ -43,7 +43,7 @@ class LoadFeatureCommand extends ContainerAwareCommand
         foreach ($files as $file) {
             $tree = $twig->parse($twig->tokenize(file_get_contents($file->getPathname())));
             $tags = $this->findFeatureNodes($tree);
-            if (!empty($tags)) {
+            if ($tags) {
                 $found = array_merge($found, $tags);
 
                 foreach ($tags as $tag) {

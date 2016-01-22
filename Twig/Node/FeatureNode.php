@@ -18,7 +18,7 @@ class FeatureNode extends \Twig_Node_If
             $body,
         ));
 
-        parent::__construct($tests, $else, $lineno, $tag);
+        parent::__construct($tests, $else, $lineno, $tag = null);
     }
 
     /**
