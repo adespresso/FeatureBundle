@@ -2,8 +2,8 @@
 
 namespace Ae\FeatureBundle;
 
-use Symfony\Component\HttpKernel\Bundle;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class CwFeatureBundle extends Bundle
+class AeFeatureBundle extends Bundle
 {
 }
