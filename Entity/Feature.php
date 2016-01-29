@@ -15,7 +15,7 @@ class Feature
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,21 +24,21 @@ class Feature
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=250)
+     * @ORM\Column(length=250)
      */
     private $name;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="enabled", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $enabled;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="role", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $role;
 
