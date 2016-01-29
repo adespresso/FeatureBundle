@@ -44,12 +44,12 @@ class Feature
 
     /**
      * @ORM\OneToMany(targetEntity="Feature", mappedBy="parent")
-     **/
+     */
     private $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="Feature", inversedBy="children", cascade={"persist", "remove"})
-     **/
+     */
     private $parent;
 
     public function __construct()
