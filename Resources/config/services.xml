@@ -1,33 +1,43 @@
 <?xml version="1.0" ?>
-
-<container xmlns="http://symfony.com/schema/dic/services"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
-        <parameter key="cw_feature.manager.class">Ae\FeatureBundle\Entity\FeatureManager</parameter>
-        <parameter key="cw_feature.security.class">Ae\FeatureBundle\Security\FeatureSecurity</parameter>
-        <parameter key="cw_feature.feature.class">Ae\FeatureBundle\Service\Feature</parameter>
-        <parameter key="cw_feature.twig.extension.feature.class">Ae\FeatureBundle\Twig\Extension\FeatureExtension</parameter>
+        <parameter key="ae_feature.manager.class">Ae\FeatureBundle\Entity\FeatureManager</parameter>
+        <parameter key="ae_feature.security.class">Ae\FeatureBundle\Security\FeatureSecurity</parameter>
+        <parameter key="ae_feature.feature.class">Ae\FeatureBundle\Service\Feature</parameter>
+        <parameter key="ae_feature.twig.extension.feature.class">Ae\FeatureBundle\Twig\Extension\FeatureExtension</parameter>
+        <!-- deprecated parameters, to be removed from v2.0.0 -->
+        <parameter key="cw_feature.manager.class">%ae_feature.manager.class%</parameter>
+        <parameter key="cw_feature.security.class">%ae_feature.security.class%</parameter>
+        <parameter key="cw_feature.feature.class">%ae_feature.feature.class%</parameter>
+        <parameter key="cw_feature.twig.extension.feature.class">%ae_feature.twig.extension.feature.class%</parameter>
     </parameters>
-
     <services>
-        <service id="cw_feature.manager" class="%cw_feature.manager.class%">
-            <argument type="service" id="doctrine.orm.entity_manager" />
+        <service class="%ae_feature.manager.class%" id="ae_feature.manager">
+            <argument id="doctrine.orm.entity_manager" type="service"/>
         </service>
-
-        <service id="cw_feature.security" class="%cw_feature.security.class%" public="false">
-            <argument type="service" id="security.context"  />
+        <service class="%ae_feature.security.class%" id="ae_feature.security" public="false">
+            <argument id="security.context" type="service"/>
         </service>
-
-        <service id="cw_feature.feature" class="%cw_feature.feature.class%">
-            <argument type="service" id="cw_feature.manager" />
-            <argument type="service" id="cw_feature.security" />
+        <service class="%ae_feature.feature.class%" id="ae_feature.feature">
+            <argument id="ae_feature.manager" type="service"/>
+            <argument id="ae_feature.security" type="service"/>
         </service>
-
-        <service id="cw_feature.twig.extension.feature" class="%cw_feature.twig.extension.feature.class%" public="false">
-            <tag name="twig.extension" />
-            <argument type="service" id="cw_feature.feature" />
+        <service class="%ae_feature.twig.extension.feature.class%" id="ae_feature.twig.extension.feature" public="false">
+            <argument id="ae_feature.feature" type="service"/>
+            <tag name="twig.extension"/>
+        </service>
+        <!-- deprecated services, to be removed from v2.0.0 -->
+        <service id="cw_feature.manager" parent="ae_feature.manager">
+            <deprecated>The "%service_id%" service is deprecated since 1.1 and will be removed in 2.0.</deprecated>
+        </service>
+        <service id="cw_feature.security" parent="ae_feature.security">
+            <deprecated>The "%service_id%" service is deprecated since 1.1 and will be removed in 2.0.</deprecated>
+        </service>
+        <service id="cw_feature.feature" parent="ae_feature.feature">
+            <deprecated>The "%service_id%" service is deprecated since 1.1 and will be removed in 2.0.</deprecated>
+        </service>
+        <service id="cw_feature.twig.extension.feature" parent="ae_feature.twig.extension.feature">
+            <deprecated>The "%service_id%" service is deprecated since 1.1 and will be removed in 2.0.</deprecated>
         </service>
     </services>
 </container>
