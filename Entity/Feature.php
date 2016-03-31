@@ -2,10 +2,11 @@
 
 namespace Ae\FeatureBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Ae\FeatureBundle\Entity\Feature.
+ * Feature entity.
  *
  * @ORM\Table(name="application_feature")
  * @ORM\Entity
@@ -15,7 +16,7 @@ class Feature
     /**
      * @var int
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -24,38 +25,41 @@ class Feature
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=250)
+     * @ORM\Column(length=250)
      */
     private $name;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="enabled", type="boolean")
+     * @ORM\Column(type="boolean")
      */
-    private $enabled;
+    private $enabled = false;
 
     /**
-     * @var text
+     * @var string
      *
-     * @ORM\Column(name="role", type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $role;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="Feature", mappedBy="parent")
-     **/
+     */
     private $children;
 
     /**
+     * @var Feature
+     *
      * @ORM\ManyToOne(targetEntity="Feature", inversedBy="children", cascade={"persist", "remove"})
-     **/
+     */
     private $parent;
 
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->enabled  = false;
+        $this->children = new ArrayCollection();
     }
 
     public function __toString()
@@ -76,9 +80,9 @@ class Feature
     /**
      * Set parent.
      *
-     * @param Ae\FeatureBundle\Entity\Feature $parent
+     * @param Feature $parent
      */
-    public function setParent(\Ae\FeatureBundle\Entity\Feature $parent)
+    public function setParent(Feature $parent)
     {
         $this->parent = $parent;
     }
@@ -86,7 +90,7 @@ class Feature
     /**
      * Get parent.
      *
-     * @return mixed
+     * @return Feature
      */
     public function getParent()
     {
@@ -136,7 +140,7 @@ class Feature
     /**
      * Set role.
      *
-     * @param text $role
+     * @param string $role
      */
     public function setRole($role)
     {
@@ -146,7 +150,7 @@ class Feature
     /**
      * Get role.
      *
-     * @return text
+     * @return string
      */
     public function getRole()
     {
@@ -161,9 +165,9 @@ class Feature
     /**
      * Add children.
      *
-     * @param Ae\FeatureBundle\Entity\Feature $children
+     * @param Feature $children
      */
-    public function addFeature(\Ae\FeatureBundle\Entity\Feature $children)
+    public function addFeature(Feature $children)
     {
         $this->children[] = $children;
     }
@@ -171,7 +175,7 @@ class Feature
     /**
      * Get children.
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getChildren()
     {
