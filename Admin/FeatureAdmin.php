@@ -13,6 +13,9 @@ use Ae\FeatureBundle\Entity\FeatureManager;
  */
 class FeatureAdmin extends Admin
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -21,6 +24,9 @@ class FeatureAdmin extends Admin
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
@@ -37,6 +43,9 @@ class FeatureAdmin extends Admin
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configureFormFields(FormMapper $formMapper)
     {
         $roles = $this->getRoles();

@@ -6,6 +6,7 @@ use Ae\FeatureBundle\Entity\FeatureManager;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
+ * @covers Ae\FeatureBundle\Entity\FeatureManager
  */
 class FeatureManagerTest extends \PHPUnit_Framework_TestCase
 {

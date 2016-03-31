@@ -6,6 +6,7 @@ use Ae\FeatureBundle\Service\Feature;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
+ * @covers Ae\FeatureBundle\Service\Feature
  */
 class FeatureTest extends \PHPUnit_Framework_TestCase
 {

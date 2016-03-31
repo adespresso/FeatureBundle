@@ -10,10 +10,13 @@ use Ae\FeatureBundle\Twig\TokenParser\FeatureTokenParser;
  */
 class FeatureExtension extends \Twig_Extension
 {
+    /**
+     * @var Feature
+     */
     protected $service;
 
     /**
-     * @param \Ae\FeatureBundle\Service\Feature $service
+     * @param Feature $service
      */
     public function __construct(Feature $service)
     {
@@ -21,9 +24,7 @@ class FeatureExtension extends \Twig_Extension
     }
 
     /**
-     * Returns the token parser instance to add to the existing list.
-     *
-     * @return array An array of Twig_TokenParser instances
+     * {@inheritdoc}
      */
     public function getTokenParsers()
     {
@@ -32,6 +33,9 @@ class FeatureExtension extends \Twig_Extension
         );
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'feature';

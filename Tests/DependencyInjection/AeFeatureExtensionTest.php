@@ -6,7 +6,8 @@ use Ae\FeatureBundle\DependencyInjection\AeFeatureExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 
 /**
- * @covers \Ae\FeatureBundle\DependencyInjection\AeFeatureExtension
+ * @author Emanuele Minotto <emanuele@adespresso.com>
+ * @covers Ae\FeatureBundle\DependencyInjection\AeFeatureExtension
  */
 class AeFeatureExtensionTest extends AbstractExtensionTestCase
 {

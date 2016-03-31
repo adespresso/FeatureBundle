@@ -7,10 +7,6 @@ namespace Ae\FeatureBundle\Twig\Node;
  */
 class FeatureNode extends \Twig_Node_If
 {
-    /**
-     * @param int    $lineno
-     * @param string $tag
-     */
     public function __construct($name, $parent, $body, $else, $lineno, $tag = null)
     {
         $tests = new \Twig_Node(array(
@@ -21,9 +17,6 @@ class FeatureNode extends \Twig_Node_If
         parent::__construct($tests, $else, $lineno, $tag = null);
     }
 
-    /**
-     * @param integer $lineno
-     */
     protected function createExpression($name, $parent, $lineno)
     {
         return new \Twig_Node_Expression_MethodCall(

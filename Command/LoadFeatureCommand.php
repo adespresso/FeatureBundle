@@ -15,6 +15,9 @@ use Ae\FeatureBundle\Twig\Node\FeatureNode;
  */
 class LoadFeatureCommand extends ContainerAwareCommand
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this

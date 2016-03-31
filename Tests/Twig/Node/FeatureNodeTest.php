@@ -6,12 +6,10 @@ use Ae\FeatureBundle\Twig\Node\FeatureNode;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
+ * @covers Ae\FeatureBundle\Twig\Node\FeatureNode
  */
 class FeatureNodeTest extends \Twig_Test_NodeTestCase
 {
-    /**
-     * @covers Ae\FeatureBundle\Twig\Node\FeatureNode::__construct
-     */
     public function testConstructor()
     {
         $name   = 'foo';
@@ -27,7 +25,6 @@ class FeatureNodeTest extends \Twig_Test_NodeTestCase
     }
 
     /**
-     * @covers Ae\FeatureBundle\Twig\Node\FeatureNode::compile
      * @dataProvider getTests
      */
     public function testCompile($node, $source, $environment = null, $isPattern = null)

@@ -6,6 +6,7 @@ use Ae\FeatureBundle\Entity\Feature;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
+ * @covers Ae\FeatureBundle\Entity\Feature
  */
 class FeatureTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,8 +18,7 @@ class FeatureTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Ae\FeatureBundle\Entity\Feature::getParent
-     * @covers Ae\FeatureBundle\Entity\Feature::setParent
+     * Test parent getter & setter.
      */
     public function testParent()
     {
@@ -27,10 +27,6 @@ class FeatureTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($parent, $this->entity->getParent());
     }
 
-    /**
-     * @covers Ae\FeatureBundle\Entity\Feature::addFeature
-     * @covers Ae\FeatureBundle\Entity\Feature::getChildren
-     */
     public function testChildren()
     {
         $parent = $this->getMock('Ae\FeatureBundle\Entity\Feature');

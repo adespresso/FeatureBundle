@@ -12,10 +12,13 @@ use Ae\FeatureBundle\Entity\Feature;
  */
 class FeatureSecurity
 {
+    /**
+     * @param SecurityContextInterface|null
+     */
     protected $context;
 
     /**
-     * @param \Symfony\Component\Security\Core\SecurityContextInterface $context
+     * @param SecurityContextInterface $context
      */
     public function __construct(SecurityContextInterface $context = null)
     {
@@ -23,7 +26,7 @@ class FeatureSecurity
     }
 
     /**
-     * @param \Ae\FeatureBundle\Entity\Feature $feature
+     * @param Feature $feature
      *
      * @return bool
      */

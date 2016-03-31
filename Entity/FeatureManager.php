@@ -11,7 +11,7 @@ use Doctrine\ORM\NoResultException;
 class FeatureManager
 {
     /**
-     * @avr \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     protected $em;
 
@@ -21,7 +21,7 @@ class FeatureManager
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
+     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -48,7 +48,7 @@ class FeatureManager
     /**
      * @param string $name Feature name
      *
-     * @return Ae\FeatureBundle\Entity\Feature
+     * @return Feature
      */
     public function findParent($name)
     {
@@ -99,8 +99,8 @@ class FeatureManager
     }
 
     /**
-     * @param \Ae\FeatureBundle\Entity\Feature $feature
-     * @param bool                                    $andFlush
+     * @param Feature $feature
+     * @param bool    $andFlush
      */
     public function update(Feature $feature, $andFlush = true)
     {
