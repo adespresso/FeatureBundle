@@ -43,7 +43,7 @@ class FeatureSecurity
             }
         }
 
-        if ($feature->getParentRole()) {
+        if ('' !== trim($feature->getParentRole())) {
             if (!$this->context->isGranted($feature->getParentRole())) {
                 return false;
             }
