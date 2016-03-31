@@ -4,11 +4,12 @@ namespace Ae\FeatureBundle\Twig\Extension;
 
 use Ae\FeatureBundle\Service\Feature;
 use Ae\FeatureBundle\Twig\TokenParser\FeatureTokenParser;
+use Twig_Extension;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
  */
-class FeatureExtension extends \Twig_Extension
+class FeatureExtension extends Twig_Extension
 {
     /**
      * @var Feature
@@ -20,7 +21,7 @@ class FeatureExtension extends \Twig_Extension
      */
     public function __construct(Feature $service)
     {
-        $this->service  = $service;
+        $this->service = $service;
     }
 
     /**
@@ -28,9 +29,9 @@ class FeatureExtension extends \Twig_Extension
      */
     public function getTokenParsers()
     {
-        return array(
+        return [
             new FeatureTokenParser(),
-        );
+        ];
     }
 
     /**

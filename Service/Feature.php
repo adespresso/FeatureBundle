@@ -4,21 +4,31 @@ namespace Ae\FeatureBundle\Service;
 
 use Ae\FeatureBundle\Entity\FeatureManager;
 use Ae\FeatureBundle\Security\FeatureSecurity;
+use Exception;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
  */
 class Feature
 {
-    protected $security;
+    /**
+     * @var FeatureManager
+     */
     protected $manager;
 
     /**
-     * @param \Ae\FeatureBundle\Entity\FeatureManager    $manager
-     * @param \Ae\FeatureBundle\Security\FeatureSecurity $security
+     * @var FeatureSecurity
      */
-    public function __construct(FeatureManager $manager, FeatureSecurity $security)
-    {
+    protected $security;
+
+    /**
+     * @param FeatureManager  $manager
+     * @param FeatureSecurity $security
+     */
+    public function __construct(
+        FeatureManager $manager,
+        FeatureSecurity $security
+    ) {
         $this->manager = $manager;
         $this->security = $security;
     }
@@ -34,8 +44,10 @@ class Feature
     public function isGranted($name, $parent)
     {
         try {
-            return $this->security->isGranted($this->manager->find($name, $parent));
-        } catch (\Exception $e) {
+            return $this->security->isGranted(
+                $this->manager->find($name, $parent)
+            );
+        } catch (Exception $exception) {
             return false;
         }
     }

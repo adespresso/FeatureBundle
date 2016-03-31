@@ -3,12 +3,13 @@
 namespace Ae\FeatureBundle\Tests\Entity;
 
 use Ae\FeatureBundle\Entity\Feature;
+use PHPUnit_Framework_TestCase;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
  * @covers Ae\FeatureBundle\Entity\Feature
  */
-class FeatureTest extends \PHPUnit_Framework_TestCase
+class FeatureTest extends PHPUnit_Framework_TestCase
 {
     protected $entity;
 
@@ -32,7 +33,10 @@ class FeatureTest extends \PHPUnit_Framework_TestCase
         $parent = $this->getMock('Ae\FeatureBundle\Entity\Feature');
         $this->entity->addFeature($parent);
         $collection = $this->entity->getChildren();
-        $this->assertInstanceOf('Doctrine\Common\Collections\Collection', $collection);
+        $this->assertInstanceOf(
+            'Doctrine\Common\Collections\Collection',
+            $collection
+        );
         $this->assertEquals($parent, $collection->first());
     }
 

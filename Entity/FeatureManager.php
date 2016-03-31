@@ -36,11 +36,12 @@ class FeatureManager
      */
     public function find($name, $parent)
     {
-        return $this->em->createQuery('SELECT f,p FROM AeFeatureBundle:Feature f JOIN f.parent p WHERE f.name = :name AND p.name = :parent')
-            ->setParameters(array(
-                'name'   => $name,
+        return $this->em
+            ->createQuery('SELECT f,p FROM AeFeatureBundle:Feature f JOIN f.parent p WHERE f.name = :name AND p.name = :parent')
+            ->setParameters([
+                'name' => $name,
                 'parent' => $parent,
-            ))
+            ])
             ->useResultCache(true, 3600 * 24, self::generateCacheKey($parent, $name))
             ->getSingleResult();
     }
@@ -52,7 +53,8 @@ class FeatureManager
      */
     public function findParent($name)
     {
-        return $this->em->createQuery('SELECT f FROM AeFeatureBundle:Feature f WHERE f.name = :name AND f.parent IS NULL')
+        return $this->em
+            ->createQuery('SELECT f FROM AeFeatureBundle:Feature f WHERE f.name = :name AND f.parent IS NULL')
             ->setParameter('name', $name)
             ->getSingleResult();
     }

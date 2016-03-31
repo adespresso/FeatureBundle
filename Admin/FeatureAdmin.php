@@ -2,11 +2,11 @@
 
 namespace Ae\FeatureBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
-use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\Datagrid\DatagridMapper;
-use Sonata\AdminBundle\Form\FormMapper;
 use Ae\FeatureBundle\Entity\FeatureManager;
+use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Datagrid\DatagridMapper;
+use Sonata\AdminBundle\Datagrid\ListMapper;
+use Sonata\AdminBundle\Form\FormMapper;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
@@ -19,9 +19,8 @@ class FeatureAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-                ->add('name')
-                ->add('enabled')
-        ;
+            ->add('name')
+            ->add('enabled');
     }
 
     /**
@@ -34,13 +33,12 @@ class FeatureAdmin extends Admin
             ->add('name')
             ->add('role')
             ->add('enabled')
-            ->add('_action', 'actions', array(
-                'actions' => array(
-                    'edit'   => array(),
-                    'delete' => array(),
-                ),
-            ))
-        ;
+            ->add('_action', 'actions', [
+                'actions' => [
+                    'edit' => [],
+                    'delete' => [],
+                ],
+            ]);
     }
 
     /**
@@ -51,35 +49,41 @@ class FeatureAdmin extends Admin
         $roles = $this->getRoles();
 
         $formMapper
-            ->add('name', 'text', array(
+            ->add('name', 'text', [
                 'required' => true,
-            ))
-            ->add('enabled', 'checkbox', array(
+            ])
+            ->add('enabled', 'checkbox', [
                 'required' => false,
-            ))
-            ->add('role', 'choice', array(
-                'choices'  => array_combine($roles, $roles),
+            ])
+            ->add('role', 'choice', [
+                'choices' => array_combine($roles, $roles),
                 'multiple' => false,
                 'required' => false,
-            ))
-        ;
+            ]);
+
         if (!$this->getSubject()->getParent()) {
-            $formMapper
-                ->add('children', 'sonata_type_collection', array(
-                      'required' => false,
-                  ), array(
-                      'edit'     => 'inline',
-                      'inline'   => 'table',
-                  ))
-            ;
+            $formMapper->add(
+                'children',
+                'sonata_type_collection',
+                [
+                    'required' => false,
+                ],
+                [
+                    'edit' => 'inline',
+                    'inline' => 'table',
+                ]
+            );
         }
     }
 
     protected function getRoles()
     {
-        $roleHierarchy = $this->getConfigurationPool()->getContainer()->getParameter('security.role_hierarchy.roles');
+        $roleHierarchy = $this
+            ->getConfigurationPool()
+            ->getContainer()
+            ->getParameter('security.role_hierarchy.roles');
 
-        $roles   = array_keys($roleHierarchy);
+        $roles = array_keys($roleHierarchy);
         $roles[] = 'ROLE_PREVIOUS_ADMIN';
 
         return $roles;
@@ -89,7 +93,8 @@ class FeatureAdmin extends Admin
     {
         $query = parent::createQuery($context);
         if ($context === 'list') {
-            $query->andWhere(current($query->getDQLPart('from'))->getAlias().'.parent IS NULL');
+            $alias = current($query->getDQLPart('from'))->getAlias();
+            $query->andWhere($alias.'.parent IS NULL');
         }
 
         return $query;
@@ -97,7 +102,11 @@ class FeatureAdmin extends Admin
 
     public function postUpdate($object)
     {
-        $cache = $this->modelManager->getEntityManager($object)->getConfiguration()->getResultCacheImpl();
+        $cache = $this->modelManager
+            ->getEntityManager($object)
+            ->getConfiguration()
+            ->getResultCacheImpl();
+
         foreach ($object->getChildren() as $child) {
             $cache->delete($this->getObjectCacheKey($child));
         }
@@ -105,6 +114,9 @@ class FeatureAdmin extends Admin
 
     protected function getObjectCacheKey($object)
     {
-        return FeatureManager::generateCacheKey($object->getParent()->getName(), $object->getName());
+        return FeatureManager::generateCacheKey(
+            $object->getParent()->getName(),
+            $object->getName()
+        );
     }
 }

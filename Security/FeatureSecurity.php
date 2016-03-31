@@ -2,8 +2,8 @@
 
 namespace Ae\FeatureBundle\Security;
 
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Ae\FeatureBundle\Entity\Feature;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Controls access to a Feature.
