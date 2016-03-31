@@ -2,6 +2,7 @@
 
 namespace Ae\FeatureBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,7 +34,7 @@ class Feature
      *
      * @ORM\Column(type="boolean")
      */
-    private $enabled;
+    private $enabled = false;
 
     /**
      * @var string
@@ -58,8 +59,7 @@ class Feature
 
     public function __construct()
     {
-        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->enabled  = false;
+        $this->children = new ArrayCollection();
     }
 
     public function __toString()
