@@ -1,24 +1,10 @@
 {
-    "name": "adespresso/feature-bundle",
-    "description": "Manage release of new features",
-    "license": "Apache-2.0",
-    "type": "symfony-bundle",
     "authors": [
         {
-            "name": "Carlo Forghieri",
-            "email": "carlo@adespresso.com"
+            "email": "carlo@adespresso.com",
+            "name": "Carlo Forghieri"
         }
     ],
-    "require": {
-        "php": "^5.4||^7.0",
-        "symfony/framework-bundle": "^2.3||^3.0",
-        "symfony/security": "^2.3||^3.0",
-        "symfony/twig-bundle": "^2.3||^3.0",
-        "doctrine/orm": "^2.2.3",
-        "friendsofsymfony/user-bundle": "1.3.*",
-        "sonata-project/admin-bundle": "^2.3.4",
-        "sonata-project/doctrine-orm-admin-bundle": "^2.3.1"
-    },
     "autoload": {
         "exclude-from-classmap": [
             "/Tests/"
@@ -27,9 +13,26 @@
             "Ae\\FeatureBundle\\": ""
         }
     },
+    "config": {
+        "sort-packages": true
+    },
+    "description": "Manage release of new features",
+    "license": "Apache-2.0",
+    "name": "adespresso/feature-bundle",
+    "require": {
+        "php": "^5.4 || ^7.0",
+        "doctrine/orm": "^2.2.3",
+        "friendsofsymfony/user-bundle": "1.3.*",
+        "sonata-project/admin-bundle": "^2.3.4",
+        "sonata-project/doctrine-orm-admin-bundle": "^2.3.1",
+        "symfony/framework-bundle": "^2.7 || ^3.0",
+        "symfony/security": "^2.3 || ^3.0",
+        "symfony/twig-bundle": "^2.3 || ^3.0"
+    },
     "require-dev": {
-        "phpunit/phpunit": "^4.8||^5.0",
+        "fabpot/php-cs-fixer": "^1.11",
         "matthiasnoback/symfony-dependency-injection-test": "^0.7.6",
-        "fabpot/php-cs-fixer": "^1.11"
-    }
+        "phpunit/phpunit": "^4.8 || ^5.0"
+    },
+    "type": "symfony-bundle"
 }
