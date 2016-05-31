@@ -2,8 +2,10 @@
 
 namespace Ae\FeatureBundle\Tests\Security;
 
+use Ae\FeatureBundle\Entity\Feature;
 use Ae\FeatureBundle\Security\FeatureSecurity;
 use PHPUnit_Framework_TestCase;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
@@ -16,9 +18,7 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $context = $this
-            ->getMockBuilder(
-                '\Symfony\Component\Security\Core\SecurityContextInterface'
-            )
+            ->getMockBuilder(SecurityContextInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
         $context->expects($this->any())
@@ -45,21 +45,21 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
     {
         $tests = [];
 
-        $feature = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $feature = $this->getMock(Feature::class);
         $feature
             ->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(false));
         $tests[] = [$feature, false];
 
-        $feature = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $feature = $this->getMock(Feature::class);
         $feature
             ->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(true));
         $tests[] = [$feature, true];
 
-        $feature = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $feature = $this->getMock(Feature::class);
         $feature
             ->expects($this->once())
             ->method('isEnabled')
@@ -70,7 +70,7 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue('ROLE_USER'));
         $tests[] = [$feature, true];
 
-        $feature = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $feature = $this->getMock(Feature::class);
         $feature
             ->expects($this->once())
             ->method('isEnabled')

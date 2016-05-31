@@ -3,6 +3,7 @@
 namespace Ae\FeatureBundle\Tests\Entity;
 
 use Ae\FeatureBundle\Entity\Feature;
+use Doctrine\Common\Collections\Collection;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -23,20 +24,17 @@ class FeatureTest extends PHPUnit_Framework_TestCase
      */
     public function testParent()
     {
-        $parent = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $parent = $this->getMock(Feature::class);
         $this->entity->setParent($parent);
         $this->assertEquals($parent, $this->entity->getParent());
     }
 
     public function testChildren()
     {
-        $parent = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $parent = $this->getMock(Feature::class);
         $this->entity->addFeature($parent);
         $collection = $this->entity->getChildren();
-        $this->assertInstanceOf(
-            'Doctrine\Common\Collections\Collection',
-            $collection
-        );
+        $this->assertInstanceOf(Collection::class, $collection);
         $this->assertEquals($parent, $collection->first());
     }
 

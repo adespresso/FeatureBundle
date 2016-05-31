@@ -2,7 +2,9 @@
 
 namespace Ae\FeatureBundle\Tests\Entity;
 
+use Ae\FeatureBundle\Entity\Feature;
 use Ae\FeatureBundle\Entity\FeatureManager;
+use Doctrine\ORM\EntityManager;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -16,11 +18,12 @@ class FeatureManagerTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->em = $this->getMockBuilder('\Doctrine\ORM\EntityManager')
+        $this->em = $this
+            ->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->manager = $this
-            ->getMockBuilder('\Ae\FeatureBundle\Entity\FeatureManager')
+            ->getMockBuilder(FeatureManager::class)
             ->setConstructorArgs([$this->em])
             ->setMethods(['emptyCache'])
             ->getMock();
@@ -29,7 +32,7 @@ class FeatureManagerTest extends PHPUnit_Framework_TestCase
     public function testCreate()
     {
         $name = 'foo';
-        $parent = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $parent = $this->getMock(Feature::class);
 
         $feature = $this->manager->create($name, $parent);
         $this->assertEquals($name, $feature->getName($name));
@@ -38,15 +41,18 @@ class FeatureManagerTest extends PHPUnit_Framework_TestCase
 
     public function testUpdate()
     {
-        $feature = $this->getMock('Ae\FeatureBundle\Entity\Feature');
-        $parent = $this->getMock('Ae\FeatureBundle\Entity\Feature');
-        $feature->expects($this->once())
+        $feature = $this->getMock(Feature::class);
+        $parent = $this->getMock(Feature::class);
+        $feature
+            ->expects($this->once())
             ->method('getParent')
             ->will($this->returnValue($parent));
-        $this->em->expects($this->once())
+        $this->em
+            ->expects($this->once())
             ->method('persist')
             ->with($feature);
-        $this->em->expects($this->once())
+        $this->em
+            ->expects($this->once())
             ->method('flush');
         $this->manager->update($feature);
     }

@@ -2,6 +2,7 @@
 
 namespace Ae\FeatureBundle\Tests\Twig;
 
+use Ae\FeatureBundle\Service\Feature;
 use Ae\FeatureBundle\Twig\Extension\FeatureExtension;
 use Twig_Test_IntegrationTestCase;
 
@@ -14,7 +15,7 @@ class IntegrationTest extends Twig_Test_IntegrationTestCase
     public function getExtensions()
     {
         $service = $this
-            ->getMockBuilder('Ae\FeatureBundle\Service\Feature')
+            ->getMockBuilder(Feature::class)
             ->disableOriginalConstructor()
             ->getMock();
         $service

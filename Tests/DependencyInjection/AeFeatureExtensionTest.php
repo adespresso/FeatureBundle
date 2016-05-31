@@ -3,6 +3,10 @@
 namespace Ae\FeatureBundle\Tests\DependencyInjection;
 
 use Ae\FeatureBundle\DependencyInjection\AeFeatureExtension;
+use Ae\FeatureBundle\Entity\FeatureManager;
+use Ae\FeatureBundle\Security\FeatureSecurity;
+use Ae\FeatureBundle\Service\Feature;
+use Ae\FeatureBundle\Twig\Extension\FeatureExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 
 /**
@@ -69,18 +73,12 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
     public function parametersProvider()
     {
         return [
-            [
-                'ae_feature.manager.class',
-                'Ae\FeatureBundle\Entity\FeatureManager',
-            ],
-            [
-                'ae_feature.security.class',
-                'Ae\FeatureBundle\Security\FeatureSecurity',
-            ],
-            ['ae_feature.feature.class', 'Ae\FeatureBundle\Service\Feature'],
+            ['ae_feature.manager.class', FeatureManager::class],
+            ['ae_feature.security.class', FeatureSecurity::class],
+            ['ae_feature.feature.class', Feature::class],
             [
                 'ae_feature.twig.extension.feature.class',
-                'Ae\FeatureBundle\Twig\Extension\FeatureExtension',
+                FeatureExtension::class,
             ],
         ];
     }
@@ -129,16 +127,10 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
     public function servicesProvider()
     {
         return [
-            ['ae_feature.manager', 'Ae\FeatureBundle\Entity\FeatureManager'],
-            [
-                'ae_feature.security',
-                'Ae\FeatureBundle\Security\FeatureSecurity',
-            ],
-            ['ae_feature.feature', 'Ae\FeatureBundle\Service\Feature'],
-            [
-                'ae_feature.twig.extension.feature',
-                'Ae\FeatureBundle\Twig\Extension\FeatureExtension',
-            ],
+            ['ae_feature.manager', FeatureManager::class],
+            ['ae_feature.security', FeatureSecurity::class],
+            ['ae_feature.feature', Feature::class],
+            ['ae_feature.twig.extension.feature', FeatureExtension::class],
         ];
     }
 }

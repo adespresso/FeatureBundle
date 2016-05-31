@@ -2,7 +2,10 @@
 
 namespace Ae\FeatureBundle\Tests\Service;
 
-use Ae\FeatureBundle\Service\Feature;
+use Ae\FeatureBundle\Entity\Feature;
+use Ae\FeatureBundle\Entity\FeatureManager;
+use Ae\FeatureBundle\Security\FeatureSecurity;
+use Ae\FeatureBundle\Service\Feature as FeatureService;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -18,19 +21,19 @@ class FeatureTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->manager = $this
-            ->getMockBuilder('Ae\FeatureBundle\Entity\FeatureManager')
+            ->getMockBuilder(FeatureManager::class)
             ->disableOriginalConstructor()
             ->getMock();
         $this->security = $this
-            ->getMockBuilder('Ae\FeatureBundle\Security\FeatureSecurity')
+            ->getMockBuilder(FeatureSecurity::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->service = new Feature($this->manager, $this->security);
+        $this->service = new FeatureService($this->manager, $this->security);
     }
 
     public function testIsGrantedTrue()
     {
-        $featureEnabled = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $featureEnabled = $this->getMock(Feature::class);
         $this->manager
             ->expects($this->atLeastOnce())
             ->method('find')
@@ -49,7 +52,7 @@ class FeatureTest extends PHPUnit_Framework_TestCase
 
     public function testIsGrantedFalse()
     {
-        $featureDisabled = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $featureDisabled = $this->getMock(Feature::class);
         $this->manager
             ->expects($this->atLeastOnce())
             ->method('find')
