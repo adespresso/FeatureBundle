@@ -2,31 +2,37 @@
 
 namespace Ae\FeatureBundle\Tests\Entity;
 
+use Ae\FeatureBundle\Entity\Feature;
 use Ae\FeatureBundle\Entity\FeatureManager;
+use Doctrine\ORM\EntityManager;
+use PHPUnit_Framework_TestCase;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
+ * @covers Ae\FeatureBundle\Entity\FeatureManager
  */
-class FeatureManagerTest extends \PHPUnit_Framework_TestCase
+class FeatureManagerTest extends PHPUnit_Framework_TestCase
 {
     protected $em;
     protected $manager;
 
     protected function setUp()
     {
-        $this->em = $this->getMockBuilder('\Doctrine\ORM\EntityManager')
+        $this->em = $this
+            ->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $this->manager = $this->getMockBuilder('\Ae\FeatureBundle\Entity\FeatureManager')
-            ->setConstructorArgs(array($this->em))
-            ->setMethods(array('emptyCache'))
+        $this->manager = $this
+            ->getMockBuilder(FeatureManager::class)
+            ->setConstructorArgs([$this->em])
+            ->setMethods(['emptyCache'])
             ->getMock();
     }
 
     public function testCreate()
     {
-        $name    = 'foo';
-        $parent  = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $name = 'foo';
+        $parent = $this->getMock(Feature::class);
 
         $feature = $this->manager->create($name, $parent);
         $this->assertEquals($name, $feature->getName($name));
@@ -35,15 +41,18 @@ class FeatureManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdate()
     {
-        $feature = $this->getMock('Ae\FeatureBundle\Entity\Feature');
-        $parent  = $this->getMock('Ae\FeatureBundle\Entity\Feature');
-        $feature->expects($this->once())
+        $feature = $this->getMock(Feature::class);
+        $parent = $this->getMock(Feature::class);
+        $feature
+            ->expects($this->once())
             ->method('getParent')
             ->will($this->returnValue($parent));
-        $this->em->expects($this->once())
+        $this->em
+            ->expects($this->once())
             ->method('persist')
             ->with($feature);
-        $this->em->expects($this->once())
+        $this->em
+            ->expects($this->once())
             ->method('flush');
         $this->manager->update($feature);
     }
@@ -53,6 +62,9 @@ class FeatureManagerTest extends \PHPUnit_Framework_TestCase
         $parentName = 'PNAME';
         $name = 'NAME';
 
-        $this->assertEquals('feature_pname_name', FeatureManager::generateCacheKey($parentName, $name));
+        $this->assertEquals(
+            'feature_pname_name',
+            FeatureManager::generateCacheKey($parentName, $name)
+        );
     }
 }

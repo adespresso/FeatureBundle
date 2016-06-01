@@ -11,7 +11,7 @@ use Doctrine\ORM\NoResultException;
 class FeatureManager
 {
     /**
-     * @avr \Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     protected $em;
 
@@ -21,7 +21,7 @@ class FeatureManager
     }
 
     /**
-     * @param \Doctrine\ORM\EntityManager $em
+     * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
     {
@@ -36,11 +36,12 @@ class FeatureManager
      */
     public function find($name, $parent)
     {
-        return $this->em->createQuery('SELECT f,p FROM AeFeatureBundle:Feature f JOIN f.parent p WHERE f.name = :name AND p.name = :parent')
-            ->setParameters(array(
-                'name'   => $name,
+        return $this->em
+            ->createQuery('SELECT f,p FROM AeFeatureBundle:Feature f JOIN f.parent p WHERE f.name = :name AND p.name = :parent')
+            ->setParameters([
+                'name' => $name,
                 'parent' => $parent,
-            ))
+            ])
             ->useResultCache(true, 3600 * 24, self::generateCacheKey($parent, $name))
             ->getSingleResult();
     }
@@ -48,11 +49,12 @@ class FeatureManager
     /**
      * @param string $name Feature name
      *
-     * @return Ae\FeatureBundle\Entity\Feature
+     * @return Feature
      */
     public function findParent($name)
     {
-        return $this->em->createQuery('SELECT f FROM AeFeatureBundle:Feature f WHERE f.name = :name AND f.parent IS NULL')
+        return $this->em
+            ->createQuery('SELECT f FROM AeFeatureBundle:Feature f WHERE f.name = :name AND f.parent IS NULL')
             ->setParameter('name', $name)
             ->getSingleResult();
     }
@@ -99,8 +101,8 @@ class FeatureManager
     }
 
     /**
-     * @param \Ae\FeatureBundle\Entity\Feature $feature
-     * @param bool                                    $andFlush
+     * @param Feature $feature
+     * @param bool    $andFlush
      */
     public function update(Feature $feature, $andFlush = true)
     {

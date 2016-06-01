@@ -3,10 +3,15 @@
 namespace Ae\FeatureBundle\Tests\DependencyInjection;
 
 use Ae\FeatureBundle\DependencyInjection\AeFeatureExtension;
+use Ae\FeatureBundle\Entity\FeatureManager;
+use Ae\FeatureBundle\Security\FeatureSecurity;
+use Ae\FeatureBundle\Service\Feature;
+use Ae\FeatureBundle\Twig\Extension\FeatureExtension;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 
 /**
- * @covers \Ae\FeatureBundle\DependencyInjection\AeFeatureExtension
+ * @author Emanuele Minotto <emanuele@adespresso.com>
+ * @covers Ae\FeatureBundle\DependencyInjection\AeFeatureExtension
  */
 class AeFeatureExtensionTest extends AbstractExtensionTestCase
 {
@@ -29,13 +34,18 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
      * @dataProvider parametersProvider
      * @group legacy
      */
-    public function testLegacyParameters($parameterName, $expectedParameterValue)
-    {
+    public function testLegacyParameters(
+        $parameterName,
+        $expectedParameterValue
+    ) {
         $this->load();
         $this->compile();
 
-        $parameterName = 'cw' . substr($parameterName, 2);
-        $this->assertContainerBuilderHasParameter($parameterName, $expectedParameterValue);
+        $parameterName = 'cw'.substr($parameterName, 2);
+        $this->assertContainerBuilderHasParameter(
+            $parameterName,
+            $expectedParameterValue
+        );
     }
 
     /**
@@ -51,7 +61,10 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
         $this->load();
         $this->compile();
 
-        $this->assertContainerBuilderHasParameter($parameterName, $expectedParameterValue);
+        $this->assertContainerBuilderHasParameter(
+            $parameterName,
+            $expectedParameterValue
+        );
     }
 
     /**
@@ -60,13 +73,15 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
     public function parametersProvider()
     {
         return [
-            ['ae_feature.manager.class', 'Ae\FeatureBundle\Entity\FeatureManager'],
-            ['ae_feature.security.class', 'Ae\FeatureBundle\Security\FeatureSecurity'],
-            ['ae_feature.feature.class', 'Ae\FeatureBundle\Service\Feature'],
-            ['ae_feature.twig.extension.feature.class', 'Ae\FeatureBundle\Twig\Extension\FeatureExtension'],
+            ['ae_feature.manager.class', FeatureManager::class],
+            ['ae_feature.security.class', FeatureSecurity::class],
+            ['ae_feature.feature.class', Feature::class],
+            [
+                'ae_feature.twig.extension.feature.class',
+                FeatureExtension::class,
+            ],
         ];
     }
-
 
     /**
      * Test services "alias" to migrate from CreativeWeb to AdEspresso.
@@ -82,9 +97,12 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
         $this->load();
         $this->compile();
 
-        $oldServiceId = 'cw' . substr($serviceId, 2);
+        $oldServiceId = 'cw'.substr($serviceId, 2);
         $this->assertContainerBuilderHasService($serviceId, $expectedClass);
-        $this->assertContainerBuilderHasServiceDefinitionWithParent($oldServiceId, $serviceId);
+        $this->assertContainerBuilderHasServiceDefinitionWithParent(
+            $oldServiceId,
+            $serviceId
+        );
     }
 
     /**
@@ -109,10 +127,10 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
     public function servicesProvider()
     {
         return [
-            ['ae_feature.manager', 'Ae\FeatureBundle\Entity\FeatureManager'],
-            ['ae_feature.security', 'Ae\FeatureBundle\Security\FeatureSecurity'],
-            ['ae_feature.feature', 'Ae\FeatureBundle\Service\Feature'],
-            ['ae_feature.twig.extension.feature', 'Ae\FeatureBundle\Twig\Extension\FeatureExtension'],
+            ['ae_feature.manager', FeatureManager::class],
+            ['ae_feature.security', FeatureSecurity::class],
+            ['ae_feature.feature', Feature::class],
+            ['ae_feature.twig.extension.feature', FeatureExtension::class],
         ];
     }
 }

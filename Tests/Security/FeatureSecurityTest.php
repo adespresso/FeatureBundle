@@ -2,26 +2,31 @@
 
 namespace Ae\FeatureBundle\Tests\Security;
 
+use Ae\FeatureBundle\Entity\Feature;
 use Ae\FeatureBundle\Security\FeatureSecurity;
+use PHPUnit_Framework_TestCase;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
+ * @covers Ae\FeatureBundle\Security\FeatureSecurity
  */
-class FeatureSecurityTest extends \PHPUnit_Framework_TestCase
+class FeatureSecurityTest extends PHPUnit_Framework_TestCase
 {
     protected $security;
 
     protected function setUp()
     {
-        $context = $this->getMockBuilder('\Symfony\Component\Security\Core\SecurityContextInterface')
+        $context = $this
+            ->getMockBuilder(SecurityContextInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
         $context->expects($this->any())
             ->method('isGranted')
-            ->will($this->returnValueMap(array(
-                array('ROLE_USER', null, true),
-                array('ROLE_ADMIN', null, false),
-            )));
+            ->will($this->returnValueMap([
+                ['ROLE_USER', null, true],
+                ['ROLE_ADMIN', null, false],
+            ]));
         $this->security = new FeatureSecurity($context);
     }
 
@@ -33,42 +38,52 @@ class FeatureSecurityTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $this->security->isGranted($feature));
     }
 
+    /**
+     * @return array
+     */
     public function getFeatures()
     {
-        $tests = array();
+        $tests = [];
 
-        $f = $this->getMock('Ae\FeatureBundle\Entity\Feature');
-        $f->expects($this->once())
+        $feature = $this->getMock(Feature::class);
+        $feature
+            ->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(false));
-        $tests[] = array($f, false);
+        $tests[] = [$feature, false];
 
-        $f = $this->getMock('Ae\FeatureBundle\Entity\Feature');
-        $f->expects($this->once())
+        $feature = $this->getMock(Feature::class);
+        $feature
+            ->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(true));
-        $tests[] = array($f, true);
+        $tests[] = [$feature, true];
 
-        $f = $this->getMock('Ae\FeatureBundle\Entity\Feature');
-        $f->expects($this->once())
+        $feature = $this->getMock(Feature::class);
+        $feature
+            ->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(true));
-        $f->expects($this->atLeastOnce())
+        $feature
+            ->expects($this->atLeastOnce())
             ->method('getRole')
             ->will($this->returnValue('ROLE_USER'));
-        $tests[] = array($f, true);
+        $tests[] = [$feature, true];
 
-        $f = $this->getMock('Ae\FeatureBundle\Entity\Feature');
-        $f->expects($this->once())
+        $feature = $this->getMock(Feature::class);
+        $feature
+            ->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(true));
-        $f->expects($this->atLeastOnce())
+        $feature
+            ->expects($this->atLeastOnce())
             ->method('getRole')
             ->will($this->returnValue('ROLE_USER'));
-        $f->expects($this->atLeastOnce())
+        $feature
+            ->expects($this->atLeastOnce())
             ->method('getParentRole')
             ->will($this->returnValue('ROLE_ADMIN'));
-        $tests[] = array($f, false);
+        $tests[] = [$feature, false];
 
         return $tests;
     }

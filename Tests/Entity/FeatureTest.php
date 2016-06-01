@@ -3,11 +3,14 @@
 namespace Ae\FeatureBundle\Tests\Entity;
 
 use Ae\FeatureBundle\Entity\Feature;
+use Doctrine\Common\Collections\Collection;
+use PHPUnit_Framework_TestCase;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
+ * @covers Ae\FeatureBundle\Entity\Feature
  */
-class FeatureTest extends \PHPUnit_Framework_TestCase
+class FeatureTest extends PHPUnit_Framework_TestCase
 {
     protected $entity;
 
@@ -17,26 +20,21 @@ class FeatureTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Ae\FeatureBundle\Entity\Feature::getParent
-     * @covers Ae\FeatureBundle\Entity\Feature::setParent
+     * Test parent getter & setter.
      */
     public function testParent()
     {
-        $parent = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $parent = $this->getMock(Feature::class);
         $this->entity->setParent($parent);
         $this->assertEquals($parent, $this->entity->getParent());
     }
 
-    /**
-     * @covers Ae\FeatureBundle\Entity\Feature::addFeature
-     * @covers Ae\FeatureBundle\Entity\Feature::getChildren
-     */
     public function testChildren()
     {
-        $parent = $this->getMock('Ae\FeatureBundle\Entity\Feature');
+        $parent = $this->getMock(Feature::class);
         $this->entity->addFeature($parent);
         $collection = $this->entity->getChildren();
-        $this->assertInstanceOf('Doctrine\Common\Collections\Collection', $collection);
+        $this->assertInstanceOf(Collection::class, $collection);
         $this->assertEquals($parent, $collection->first());
     }
 
