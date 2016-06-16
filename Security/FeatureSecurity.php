@@ -3,7 +3,7 @@
 namespace Ae\FeatureBundle\Security;
 
 use Ae\FeatureBundle\Entity\Feature;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Controls access to a Feature.
@@ -13,14 +13,14 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class FeatureSecurity
 {
     /**
-     * @param SecurityContextInterface|null
+     * @param AuthorizationCheckerInterface|null
      */
     protected $context;
 
     /**
-     * @param SecurityContextInterface $context
+     * @param AuthorizationCheckerInterface $context
      */
-    public function __construct(SecurityContextInterface $context = null)
+    public function __construct(AuthorizationCheckerInterface $context = null)
     {
         $this->context = $context;
     }
