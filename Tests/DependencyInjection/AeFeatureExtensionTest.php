@@ -2,6 +2,7 @@
 
 namespace Ae\FeatureBundle\Tests\DependencyInjection;
 
+use Ae\FeatureBundle\Admin\FeatureAdmin;
 use Ae\FeatureBundle\DependencyInjection\AeFeatureExtension;
 use Ae\FeatureBundle\Entity\FeatureManager;
 use Ae\FeatureBundle\Security\FeatureSecurity;
@@ -89,7 +90,7 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
      * @param string $serviceId
      * @param string $expectedClass
      *
-     * @dataProvider servicesProvider
+     * @dataProvider legacyServicesProvider
      * @group legacy
      */
     public function testLegacyServices($serviceId, $expectedClass)
@@ -111,7 +112,7 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
      * @param string $serviceId
      * @param string $expectedClass
      *
-     * @dataProvider servicesProvider
+     * @dataProvider legacyServicesProvider
      */
     public function testServices($serviceId, $expectedClass)
     {
@@ -124,7 +125,7 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
     /**
      * @return array
      */
-    public function servicesProvider()
+    public function legacyServicesProvider()
     {
         return [
             ['ae_feature.manager', FeatureManager::class],
@@ -132,5 +133,55 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
             ['ae_feature.feature', Feature::class],
             ['ae_feature.twig.extension.feature', FeatureExtension::class],
         ];
+    }
+
+    /**
+     * Test Sonata Admin loading.
+     */
+    public function testLoadSonataAdmin()
+    {
+        if (!class_exists('Sonata\AdminBundle\Admin\Admin')) {
+            $this->markTestSkipped(
+                'Class Sonata\AdminBundle\Admin\Admin not available.'
+            );
+
+            return;
+        }
+
+        $this->load();
+        $this->compile();
+
+        $this->assertContainerBuilderHasService(
+            'ae_feature.admin',
+            FeatureAdmin::class
+        );
+
+        $definition = $this->container->getDefinition('ae_feature.admin');
+        $this->assertTrue($definition->hasTag('sonata.admin'));
+    }
+
+    /**
+     * Test Sonata Admin loading prevented due to a conflicting service.
+     */
+    public function testLoadSonataAdminWithConflict()
+    {
+        if (!class_exists('Sonata\AdminBundle\Admin\Admin')) {
+            $this->markTestSkipped(
+                'Class Sonata\AdminBundle\Admin\Admin not available.'
+            );
+
+            return;
+        }
+
+        $definition = $this->registerService(
+            'old_feature_admin',
+            FeatureAdmin::class
+        );
+        $definition->addTag('sonata.admin');
+        $this->setDefinition('old_feature_admin', $definition);
+
+        $this->load();
+
+        $this->assertContainerBuilderNotHasService('ae_feature.admin');
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Ae\FeatureBundle\DependencyInjection;
 
+use Ae\FeatureBundle\Admin\FeatureAdmin;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -25,5 +27,33 @@ class AeFeatureExtension extends Extension
         );
 
         $loader->load('services.xml');
+
+        if ($this->canLoadSonataAdmin($container)) {
+            $loader->load('sonata.xml');
+        }
+    }
+
+    /**
+     * Checks if the Admin class can be loaded without conflicts.
+     *
+     * @param ContainerBuilder $container
+     *
+     * @return bool
+     */
+    private function canLoadSonataAdmin(ContainerBuilder $container)
+    {
+        if (!class_exists('Sonata\AdminBundle\Admin\Admin')) {
+            return false;
+        }
+
+        $conflicts = array_filter(
+            $container->getDefinitions(),
+            function (Definition $definition) {
+                return FeatureAdmin::class === $definition->getClass() &&
+                    $definition->hasTag('sonata.admin');
+            }
+        );
+
+        return empty($conflicts);
     }
 }

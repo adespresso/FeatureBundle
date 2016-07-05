@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="ae_feature.admin.group">Application</parameter>
+        <parameter key="ae_feature.admin.label">Features</parameter>
+        <parameter key="ae_feature.admin.manager_type">orm</parameter>
+    </parameters>
+    <services>
+        <service class="Ae\FeatureBundle\Admin\FeatureAdmin" id="ae_feature.admin">
+            <argument/>
+            <argument>Ae\FeatureBundle\Entity\Feature</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag group="%ae_feature.admin.group%" label="%ae_feature.admin.label%" manager_type="%ae_feature.admin.manager_type%" name="sonata.admin"/>
+        </service>
+    </services>
+</container>
