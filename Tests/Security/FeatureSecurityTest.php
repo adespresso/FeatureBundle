@@ -5,7 +5,7 @@ namespace Ae\FeatureBundle\Tests\Security;
 use Ae\FeatureBundle\Entity\Feature;
 use Ae\FeatureBundle\Security\FeatureSecurity;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
@@ -18,10 +18,11 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $context = $this
-            ->getMockBuilder(SecurityContextInterface::class)
+            ->getMockBuilder(AuthorizationCheckerInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $context->expects($this->any())
+        $context
+            ->expects($this->any())
             ->method('isGranted')
             ->will($this->returnValueMap([
                 ['ROLE_USER', null, true],
