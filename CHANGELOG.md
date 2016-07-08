@@ -36,5 +36,5 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
   * Migration initialization from cw_feature.* to ae_feature.*
   * Remove unused Configuration
 
-[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/1.1.0...HEAD
-[1.1.0]: https://github.com/olivierlacan/keep-a-changelog/compare/1.0.0...1.1.0
+[Unreleased]: https://github.com/adespresso/FeatureBundle/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/adespresso/FeatureBundle/compare/1.0.0...1.1.0
