@@ -5,10 +5,18 @@ All Notable changes to `adespresso/feature-bundle` will be documented in this fi
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased]
+### Changed
+
+  * Updated symfony dependencies to require at least v2.8
+
 ### Fixed
 
   * Moved from deprecated `Symfony\Component\Security\Core\SecurityContextInterface` to `Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface`
   * Don't use cache if no cache is provided from the EntityManager
+
+### Removed
+
+  * Removed friendsofsymfony/user-bundle dependency
 
 ## [1.1.0] - 2016-06-01
 ### Added
