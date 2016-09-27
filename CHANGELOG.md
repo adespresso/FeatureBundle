@@ -8,6 +8,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Fixed
 
   * Moved from deprecated `Symfony\Component\Security\Core\SecurityContextInterface` to `Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface`
+  * Don't use cache if no cache is provided from the EntityManager
 
 ## [1.1.0] - 2016-06-01
 ### Added
