@@ -28,7 +28,7 @@ before_script:
   - vendor/bin/php-cs-fixer --diff --dry-run -v fix
 
 script:
-  - vendor/bin/phpunit -v
+  - SYMFONY_DEPRECATIONS_HELPER=weak vendor/bin/phpunit -v
 
 after_success:
   - 'if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_BRANCH == "master" && $TRAVIS_PHP_VERSION == "5.6" ]]; then sh generate-api.sh; fi;'
