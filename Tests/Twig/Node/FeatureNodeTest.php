@@ -25,7 +25,7 @@ class FeatureNodeTest extends Twig_Test_NodeTestCase
 
         $this->assertInstanceOf('Twig_Node_Expression_MethodCall', $tests[0]);
         $this->assertEquals($body, $tests[1]);
-        $this->assertNull($node->getNode('else'));
+        $this->assertFalse($node->hasNode('else'));
     }
 
     /**

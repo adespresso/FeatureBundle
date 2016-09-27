@@ -24,14 +24,18 @@ class FeatureTest extends PHPUnit_Framework_TestCase
      */
     public function testParent()
     {
-        $parent = $this->getMock(Feature::class);
+        $parent = $this
+            ->getMockBuilder(Feature::class)
+            ->getMock();
         $this->entity->setParent($parent);
         $this->assertEquals($parent, $this->entity->getParent());
     }
 
     public function testChildren()
     {
-        $parent = $this->getMock(Feature::class);
+        $parent = $this
+            ->getMockBuilder(Feature::class)
+            ->getMock();
         $this->entity->addFeature($parent);
         $collection = $this->entity->getChildren();
         $this->assertInstanceOf(Collection::class, $collection);

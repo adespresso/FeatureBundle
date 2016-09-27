@@ -2,6 +2,7 @@
 
 namespace Ae\FeatureBundle\Entity;
 
+use Doctrine\Common\Cache\Cache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 
@@ -121,7 +122,12 @@ class FeatureManager
      */
     public function emptyCache($name, $parent)
     {
-        $cache = $this->em->getConfiguration()->getResultCacheImpl();
-        $cache->delete(self::generateCacheKey($parent, $name));
+        $cache = $this->em
+            ->getConfiguration()
+            ->getResultCacheImpl();
+
+        if ($cache instanceof Cache) {
+            $cache->delete(self::generateCacheKey($parent, $name));
+        }
     }
 }
