@@ -25,6 +25,16 @@ class FeatureNodeTest extends Twig_Test_NodeTestCase
 
         $this->assertInstanceOf('Twig_Node_Expression_MethodCall', $tests[0]);
         $this->assertEquals($body, $tests[1]);
+
+        // if not defined, the "else" node won't be created
+        // see https://github.com/twigphp/Twig/pull/2123
+        // TO DO: remove after twig/twig:^1.25.0
+        if ($node->hasNode('else')) {
+            $this->assertNull($node->getNode('else'));
+
+            return;
+        }
+
         $this->assertFalse($node->hasNode('else'));
     }
 
