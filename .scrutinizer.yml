@@ -11,7 +11,7 @@ build:
     tests:
         override:
             -
-                command: 'phpunit --coverage-clover=coverage'
+                command: 'SYMFONY_DEPRECATIONS_HELPER=weak phpunit --coverage-clover=coverage'
                 coverage:
                     file: 'coverage'
                     format: 'php-clover'
