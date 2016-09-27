@@ -46,21 +46,27 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
     {
         $tests = [];
 
-        $feature = $this->getMock(Feature::class);
+        $feature = $this
+            ->getMockBuilder(Feature::class)
+            ->getMock();
         $feature
             ->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(false));
         $tests[] = [$feature, false];
 
-        $feature = $this->getMock(Feature::class);
+        $feature = $this
+            ->getMockBuilder(Feature::class)
+            ->getMock();
         $feature
             ->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(true));
         $tests[] = [$feature, true];
 
-        $feature = $this->getMock(Feature::class);
+        $feature = $this
+            ->getMockBuilder(Feature::class)
+            ->getMock();
         $feature
             ->expects($this->once())
             ->method('isEnabled')
@@ -71,7 +77,9 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
             ->will($this->returnValue('ROLE_USER'));
         $tests[] = [$feature, true];
 
-        $feature = $this->getMock(Feature::class);
+        $feature = $this
+            ->getMockBuilder(Feature::class)
+            ->getMock();
         $feature
             ->expects($this->once())
             ->method('isEnabled')

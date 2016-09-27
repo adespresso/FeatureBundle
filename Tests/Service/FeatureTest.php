@@ -33,7 +33,9 @@ class FeatureTest extends PHPUnit_Framework_TestCase
 
     public function testIsGrantedTrue()
     {
-        $featureEnabled = $this->getMock(Feature::class);
+        $featureEnabled = $this
+            ->getMockBuilder(Feature::class)
+            ->getMock();
         $this->manager
             ->expects($this->atLeastOnce())
             ->method('find')
@@ -52,7 +54,9 @@ class FeatureTest extends PHPUnit_Framework_TestCase
 
     public function testIsGrantedFalse()
     {
-        $featureDisabled = $this->getMock(Feature::class);
+        $featureDisabled = $this
+            ->getMockBuilder(Feature::class)
+            ->getMock();
         $this->manager
             ->expects($this->atLeastOnce())
             ->method('find')
