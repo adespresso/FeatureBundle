@@ -26,6 +26,21 @@
             <argument id="ae_feature.feature" type="service"/>
             <tag name="twig.extension"/>
         </service>
+        <service class="Ae\FeatureBundle\Command\CreateFeatureCommand" id="ae_feature.command.create_feature">
+            <argument id="ae_feature.manager" type="service"/>
+            <argument id="doctrine.orm.entity_manager" type="service"/>
+            <tag name="console.command" />
+        </service>
+        <service class="Ae\FeatureBundle\Command\DisableFeatureCommand" id="ae_feature.command.disable_feature">
+            <argument id="ae_feature.manager" type="service"/>
+            <argument id="doctrine.orm.entity_manager" type="service"/>
+            <tag name="console.command" />
+        </service>
+        <service class="Ae\FeatureBundle\Command\EnableFeatureCommand" id="ae_feature.command.enable_feature">
+            <argument id="ae_feature.manager" type="service"/>
+            <argument id="doctrine.orm.entity_manager" type="service"/>
+            <tag name="console.command" />
+        </service>
         <!-- deprecated services, to be removed from v2.0.0 -->
         <service id="cw_feature.manager" parent="ae_feature.manager">
             <deprecated>The "%service_id%" service is deprecated since 1.1 and will be removed in 2.0.</deprecated>
