@@ -5,6 +5,12 @@ All Notable changes to `adespresso/feature-bundle` will be documented in this fi
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased]
+### Added
+
+  * Added `features:create <parent> <name> [--enabled] [--role=<REQUIRED_ROLE>]` console command to create a feature from CLI
+  * Added `features:disable <parent> <name>` console command to disable a feature from CLI
+  * Added `features:enable <parent> <name> [--role=<REQUIRED_ROLE>]` console command to enable a feature from CLI
+
 ### Changed
 
   * Updated symfony dependencies to require at least v2.8

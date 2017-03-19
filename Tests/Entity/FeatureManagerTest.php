@@ -11,7 +11,7 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
- * @covers Ae\FeatureBundle\Entity\FeatureManager
+ * @covers \Ae\FeatureBundle\Entity\FeatureManager
  */
 class FeatureManagerTest extends PHPUnit_Framework_TestCase
 {

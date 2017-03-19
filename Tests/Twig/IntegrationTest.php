@@ -8,7 +8,7 @@ use Twig_Test_IntegrationTestCase;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
- * @covers Ae\FeatureBundle\Twig\Node\FeatureNode
+ * @covers \Ae\FeatureBundle\Twig\Node\FeatureNode
  */
 class IntegrationTest extends Twig_Test_IntegrationTestCase
 {
