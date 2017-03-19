@@ -11,7 +11,7 @@ use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 
 /**
  * @author Emanuele Minotto <emanuele@adespresso.com>
- * @covers Ae\FeatureBundle\DependencyInjection\AeFeatureExtension
+ * @covers \Ae\FeatureBundle\DependencyInjection\AeFeatureExtension
  */
 class AeFeatureExtensionTest extends AbstractExtensionTestCase
 {

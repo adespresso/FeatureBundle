@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * @author Emanuele Minotto <emanuele@adespresso.com>
- * @covers Ae\FeatureBundle\Security\FeatureSecurity
+ * @covers \Ae\FeatureBundle\Security\FeatureSecurity
  */
 class LegacyFeatureSecurityTest extends FeatureSecurityTest
 {

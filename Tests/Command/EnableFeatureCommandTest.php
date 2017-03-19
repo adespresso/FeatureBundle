@@ -12,7 +12,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @author Emanuele Minotto <emanuele@adespresso.com>
- * @covers Ae\FeatureBundle\Command\EnableFeatureCommand
+ * @covers \Ae\FeatureBundle\Command\EnableFeatureCommand
  */
 class EnableFeatureCommandTest extends PHPUnit_Framework_TestCase
 {

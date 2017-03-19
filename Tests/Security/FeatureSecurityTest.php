@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
- * @covers Ae\FeatureBundle\Security\FeatureSecurity
+ * @covers \Ae\FeatureBundle\Security\FeatureSecurity
  */
 class FeatureSecurityTest extends PHPUnit_Framework_TestCase
 {

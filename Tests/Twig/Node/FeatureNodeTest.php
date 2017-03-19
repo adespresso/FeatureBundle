@@ -10,7 +10,7 @@ use Twig_Test_NodeTestCase;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
- * @covers Ae\FeatureBundle\Twig\Node\FeatureNode
+ * @covers \Ae\FeatureBundle\Twig\Node\FeatureNode
  */
 class FeatureNodeTest extends Twig_Test_NodeTestCase
 {

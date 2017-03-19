@@ -12,7 +12,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @author Emanuele Minotto <emanuele@adespresso.com>
- * @covers Ae\FeatureBundle\Command\DisableFeatureCommand
+ * @covers \Ae\FeatureBundle\Command\DisableFeatureCommand
  */
 class DisableFeatureCommandTest extends PHPUnit_Framework_TestCase
 {

@@ -8,7 +8,7 @@ use PHPUnit_Framework_TestCase;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
- * @covers Ae\FeatureBundle\Entity\Feature
+ * @covers \Ae\FeatureBundle\Entity\Feature
  */
 class FeatureTest extends PHPUnit_Framework_TestCase
 {
