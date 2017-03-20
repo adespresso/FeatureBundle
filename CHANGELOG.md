@@ -14,6 +14,7 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
 ### Changed
 
   * Updated symfony dependencies to require at least v2.8
+  * Command `features:load` now allows both paths and bundles as an array of arguments
 
 ### Fixed
 

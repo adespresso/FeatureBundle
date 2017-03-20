@@ -3,15 +3,15 @@
 namespace Ae\FeatureBundle\Command;
 
 use Ae\FeatureBundle\Twig\Node\FeatureNode;
-use Exception;
-use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Twig_Node;
+use Twig_Source;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
@@ -27,9 +27,9 @@ class LoadFeatureCommand extends ContainerAwareCommand
             ->setName('features:load')
             ->setDescription('Persist new features found in templates')
             ->addArgument(
-                'bundle',
-                InputArgument::REQUIRED,
-                'The bundle where to load the features'
+                'path',
+                InputArgument::REQUIRED | InputArgument::IS_ARRAY,
+                'The path or bundle where to load the features'
             )
             ->addOption(
                 'dry-run',
@@ -44,38 +44,32 @@ class LoadFeatureCommand extends ContainerAwareCommand
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $twig = $this->getContainer()->get('twig');
-        $bundle = $this
-            ->getApplication()
-            ->getKernel()
-            ->getBundle($input->getArgument('bundle'));
+        $container = $this->getContainer();
+        $twig = $container->get('twig');
+        $files = $this->getFinderInstance($input->getArgument('path'));
 
-        if (!$bundle) {
-            throw new InvalidArgumentException("Bundle `$bundle` does not exists");
-        }
         $found = [];
-        $dir = $bundle->getPath().'/Resources/views/';
-        if (!is_dir($dir)) {
-            throw new Exception("'Directory `$dir` does not exists.");
-        }
-        $finder = new Finder();
-        $files = $finder->files()->name('*.html.twig')->in($dir);
         foreach ($files as $file) {
-            $tree = $twig->parse(
-                $twig->tokenize(file_get_contents($file->getPathname()))
-            );
+            $tree = $twig->parse($twig->tokenize(new Twig_Source(
+                file_get_contents($file->getPathname()),
+                $file->getFilename(),
+                $file->getPathname()
+            )));
             $tags = $this->findFeatureNodes($tree);
-            if ($tags) {
-                $found = array_merge($found, $tags);
 
-                foreach ($tags as $tag) {
-                    $output->writeln(sprintf(
-                        'Found <info>%s</info>.<info>%s</info> in <info>%s</info>',
-                        $tag['parent'],
-                        $tag['name'],
-                        $file->getFilename()
-                    ));
-                }
+            if (empty($tags)) {
+                continue;
+            }
+
+            $found = array_merge($found, $tags);
+
+            foreach ($tags as $tag) {
+                $output->writeln(sprintf(
+                    'Found <info>%s</info>.<info>%s</info> in <info>%s</info>',
+                    $tag['parent'],
+                    $tag['name'],
+                    $file->getFilename()
+                ));
             }
         }
 
@@ -83,13 +77,20 @@ class LoadFeatureCommand extends ContainerAwareCommand
             return;
         }
 
-        $manager = $this->getContainer()->get('cw_feature.manager');
+        $manager = $container->get('ae_feature.manager');
         foreach ($found as $tag) {
             $manager->findOrCreate($tag['name'], $tag['parent']);
         }
     }
 
-    protected function findFeatureNodes(Twig_Node $node)
+    /**
+     * Find feature nodes.
+     *
+     * @param Twig_Node $node
+     *
+     * @return array
+     */
+    private function findFeatureNodes(Twig_Node $node)
     {
         $found = [];
         $stack = [$node];
@@ -121,5 +122,38 @@ class LoadFeatureCommand extends ContainerAwareCommand
         }
 
         return array_values($found);
+    }
+
+    /**
+     * Gets a Finder instance with required paths.
+     *
+     * @param array $dirsOrBundles Required directories or bundles
+     *
+     * @return Finder
+     */
+    private function getFinderInstance(array $dirsOrBundles)
+    {
+        $finder = new Finder();
+        $application = $this->getApplication();
+
+        $kernel = null;
+        $bundles = [];
+        if ($application instanceof Application) {
+            $kernel = $application->getKernel();
+            $bundles = $kernel->getBundles();
+        }
+
+        foreach ($dirsOrBundles as $dirOrBundle) {
+            if (null !== $kernel && isset($bundles[$dirOrBundle])) {
+                $bundle = $kernel->getBundle($dirOrBundle);
+                $dirOrBundle = $bundle->getPath().'/Resources/views/';
+            }
+
+            $finder->in($dirOrBundle);
+        }
+
+        return $finder
+            ->files()
+            ->name('*.twig');
     }
 }
