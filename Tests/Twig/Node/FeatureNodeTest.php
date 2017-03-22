@@ -2,7 +2,9 @@
 
 namespace Ae\FeatureBundle\Tests\Twig\Node;
 
+use Ae\FeatureBundle\Twig\Extension\FeatureExtension;
 use Ae\FeatureBundle\Twig\Node\FeatureNode;
+use Twig_Environment;
 use Twig_Node;
 use Twig_Node_Expression_Name;
 use Twig_Node_Print;
@@ -38,18 +40,6 @@ class FeatureNodeTest extends Twig_Test_NodeTestCase
         $this->assertFalse($node->hasNode('else'));
     }
 
-    /**
-     * @dataProvider getTests
-     */
-    public function testCompile(
-        $node,
-        $source,
-        $environment = null,
-        $isPattern = null
-    ) {
-        parent::testCompile($node, $source, $environment, $isPattern);
-    }
-
     public function getTests()
     {
         $tests = [];
@@ -60,10 +50,14 @@ class FeatureNodeTest extends Twig_Test_NodeTestCase
             new Twig_Node_Print(new Twig_Node_Expression_Name('foo', 1), 1),
         ], [], 1);
 
+        $extension = Twig_Environment::VERSION_ID >= 12600
+            ? FeatureExtension::class
+            : 'feature';
+
         $node = new FeatureNode($name, $parent, $body, null, 1);
         $tests[] = [$node, <<<EOF
 // line 1
-if (\$this->env->getExtension('feature')->isGranted("$name", "$parent")) {
+if (\$this->env->getExtension('{$extension}')->isGranted("$name", "$parent")) {
     echo {$this->getVariableGetter('foo')};
 }
 EOF
@@ -75,7 +69,7 @@ EOF
         $node = new FeatureNode($name, $parent, $body, $else, 1);
         $tests[] = [$node, <<<EOF
 // line 1
-if (\$this->env->getExtension('feature')->isGranted("$name", "$parent")) {
+if (\$this->env->getExtension('{$extension}')->isGranted("$name", "$parent")) {
     echo {$this->getVariableGetter('foo')};
 } else {
     echo {$this->getVariableGetter('bar')};
