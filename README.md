@@ -39,5 +39,5 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## License
 
-This bundle is under the MIT license.
+This bundle is under the Apache License 2.0.
 
