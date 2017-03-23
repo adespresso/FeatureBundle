@@ -5,6 +5,8 @@ All Notable changes to `adespresso/feature-bundle` will be documented in this fi
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
 ## [Unreleased]
+
+## [1.2.0] - 2017-03-23
 ### Added
 
   * Added `features:create <parent> <name> [--enabled] [--role=<REQUIRED_ROLE>]` console command to create a feature from CLI
@@ -52,5 +54,6 @@ Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) princip
   * Migration initialization from cw_feature.* to ae_feature.*
   * Remove unused Configuration
 
-[Unreleased]: https://github.com/adespresso/FeatureBundle/compare/1.1.0...HEAD
+[Unreleased]: https://github.com/adespresso/FeatureBundle/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/adespresso/FeatureBundle/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/adespresso/FeatureBundle/compare/1.0.0...1.1.0
