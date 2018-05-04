@@ -111,7 +111,7 @@ class LoadFeatureCommandTest extends PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $twig = new Twig_Environment(new Twig_Loader_Array());
+        $twig = new Twig_Environment(new Twig_Loader_Array([]));
         $twig->addExtension(new FeatureExtension($service));
 
         $this->container
