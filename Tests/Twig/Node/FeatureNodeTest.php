@@ -50,7 +50,7 @@ class FeatureNodeTest extends Twig_Test_NodeTestCase
             new Twig_Node_Print(new Twig_Node_Expression_Name('foo', 1), 1),
         ], [], 1);
 
-        $extension = Twig_Environment::VERSION_ID >= 12600
+        $extension = version_compare(Twig_Environment::VERSION, '1.26.0', '>=')
             ? FeatureExtension::class
             : 'feature';
 

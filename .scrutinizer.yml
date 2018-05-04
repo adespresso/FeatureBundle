@@ -3,11 +3,12 @@ checks:
     php: true
 filter:
     excluded_paths:
+        - 'composer.lock'
         - 'vendor/*'
         - 'Tests/*'
 build:
     environment:
-        php: '5.5.25'
+        php: '7.0.8'
     tests:
         override:
             -

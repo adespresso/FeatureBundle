@@ -50,11 +50,18 @@ class LoadFeatureCommand extends ContainerAwareCommand
 
         $found = [];
         foreach ($files as $file) {
-            $tree = $twig->parse($twig->tokenize(new Twig_Source(
-                file_get_contents($file->getPathname()),
-                $file->getFilename(),
-                $file->getPathname()
-            )));
+            if (class_exists(Twig_Source::class)) {
+                $tree = $twig->parse($twig->tokenize(new Twig_Source(
+                    file_get_contents($file->getPathname()),
+                    $file->getFilename(),
+                    $file->getPathname()
+                )));
+            } else {
+                $tree = $twig->parse(
+                    $twig->tokenize(file_get_contents($file->getPathname()))
+                );
+            }
+
             $tags = $this->findFeatureNodes($tree);
 
             if (empty($tags)) {

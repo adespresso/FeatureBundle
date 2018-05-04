@@ -30,7 +30,7 @@ class FeatureNode extends Twig_Node_If
     {
         return new Twig_Node_Expression_MethodCall(
             new Twig_Node_Expression_ExtensionReference(
-                Twig_Environment::VERSION_ID >= 12600
+                version_compare(Twig_Environment::VERSION, '1.26.0', '>=')
                     ? FeatureExtension::class
                     : 'feature',
                 $lineno
