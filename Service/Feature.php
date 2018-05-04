@@ -9,7 +9,7 @@ use Exception;
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
  */
-class Feature
+class Feature implements FeatureInterface
 {
     /**
      * @var FeatureManager
