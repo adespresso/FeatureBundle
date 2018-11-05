@@ -6,13 +6,33 @@ filter:
         - 'composer.lock'
         - 'vendor/*'
         - 'Tests/*'
+build_failure_conditions:
+    - 'elements.rating(< D).new.exists'
+    - 'project.metric_change("scrutinizer.test_coverage", < -0.01)'
 build:
     environment:
-        php: '7.0.8'
+        php: '7.1'
+        mysql: false
+        memcached: false
+        node: false
+        mongodb: false
+        redis: false
+        postgresql: false
+        elasticsearch: false
+        neo4j: false
+        rabbitmq: false
+        variables:
+            SYMFONY_DEPRECATIONS_HELPER: 'weak'
     tests:
         override:
             -
-                command: 'SYMFONY_DEPRECATIONS_HELPER=weak phpunit --coverage-clover=coverage'
+                command: 'phpunit --coverage-clover=coverage'
                 coverage:
                     file: 'coverage'
                     format: 'php-clover'
+    nodes:
+        tests: true
+        analysis:
+            tests:
+                override:
+                    - php-scrutinizer-run
