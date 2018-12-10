@@ -2,7 +2,6 @@
 
 namespace Ae\FeatureBundle\Admin;
 
-use Ae\FeatureBundle\Entity\FeatureManager;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
@@ -102,21 +101,18 @@ class FeatureAdmin extends Admin
 
     public function postUpdate($object)
     {
-        $cache = $this->modelManager
-            ->getEntityManager($object)
-            ->getConfiguration()
-            ->getResultCacheImpl();
+        $manager = $this
+            ->getConfigurationPool()
+            ->getContainer()
+            ->get('ae_feature.manager');
 
         foreach ($object->getChildren() as $child) {
-            $cache->delete($this->getObjectCacheKey($child));
+            $manager->emptyCache(
+                $child->getName(),
+                $child
+                    ->getParent()
+                    ->getName()
+            );
         }
-    }
-
-    protected function getObjectCacheKey($object)
-    {
-        return FeatureManager::generateCacheKey(
-            $object->getParent()->getName(),
-            $object->getName()
-        );
     }
 }
