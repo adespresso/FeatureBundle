@@ -14,6 +14,7 @@
     <services>
         <service class="%ae_feature.manager.class%" id="ae_feature.manager">
             <argument id="doctrine.orm.entity_manager" type="service"/>
+            <argument id="ae_feature.cache" type="service"/>
         </service>
         <service class="%ae_feature.security.class%" id="ae_feature.security" public="false">
             <argument id="security.authorization_checker" type="service"/>
@@ -41,6 +42,7 @@
             <argument id="doctrine.orm.entity_manager" type="service"/>
             <tag name="console.command" />
         </service>
+        <service class="Doctrine\Common\Cache\ArrayCache" id="ae_feature.default_cache" public="false"/>
         <!-- deprecated services, to be removed from v2.0.0 -->
         <service id="cw_feature.manager" parent="ae_feature.manager">
             <deprecated>The "%service_id%" service is deprecated since 1.1 and will be removed in 2.0.</deprecated>

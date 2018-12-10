@@ -45,9 +45,11 @@ in the ``app/AppKernel.php`` file of your project:
 Documentation
 -------------
 
+-  `Configuration Reference`_
 -  `Usage`_
 -  `Commands`_
 
 .. _Usage: https://github.com/adespresso/FeatureBundle/tree/master/Resources/doc/usage.rst
 .. _Commands: https://github.com/adespresso/FeatureBundle/tree/master/Resources/doc/commands.rst
+.. _Configuration Reference: https://github.com/adespresso/FeatureBundle/tree/master/Resources/doc/configuration-reference.rst
 .. _`installation chapter`: https://getcomposer.org/doc/00-intro.md
