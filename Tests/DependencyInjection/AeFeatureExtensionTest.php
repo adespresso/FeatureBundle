@@ -7,6 +7,7 @@ use Ae\FeatureBundle\Entity\FeatureManager;
 use Ae\FeatureBundle\Security\FeatureSecurity;
 use Ae\FeatureBundle\Service\Feature;
 use Ae\FeatureBundle\Twig\Extension\FeatureExtension;
+use Doctrine\Common\Cache\ArrayCache;
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 
 /**
@@ -112,6 +113,7 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
      * @param string $expectedClass
      *
      * @dataProvider servicesProvider
+     * @dataProvider newServicesProvider
      */
     public function testServices($serviceId, $expectedClass)
     {
@@ -132,5 +134,34 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
             ['ae_feature.feature', Feature::class],
             ['ae_feature.twig.extension.feature', FeatureExtension::class],
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function newServicesProvider()
+    {
+        return [
+            ['ae_feature.default_cache', ArrayCache::class],
+        ];
+    }
+
+    public function testCacheProviderHasDefaultAlias()
+    {
+        $this->load();
+
+        $this->assertContainerBuilderHasAlias(
+            'ae_feature.cache',
+            'ae_feature.default_cache'
+        );
+    }
+
+    public function testCacheProviderHasDefinedAlias()
+    {
+        $this->load([
+            'cache' => 'service',
+        ]);
+
+        $this->assertContainerBuilderHasAlias('ae_feature.cache', 'service');
     }
 }

@@ -16,17 +16,19 @@ class FeatureManager
      */
     protected $em;
 
-    public static function generateCacheKey($parentName, $name)
-    {
-        return strtolower(sprintf('feature_%s_%s', $parentName, $name));
-    }
+    /**
+     * @var Cache
+     */
+    private $cache;
 
     /**
      * @param EntityManager $em
+     * @param Cache         $cache
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, Cache $cache)
     {
         $this->em = $em;
+        $this->cache = $cache;
     }
 
     /**
@@ -37,14 +39,23 @@ class FeatureManager
      */
     public function find($name, $parent)
     {
-        return $this->em
+        $key = $this->generateCacheKey($parent, $name);
+
+        if ($this->cache->contains($key)) {
+            return $this->cache->fetch($key);
+        }
+
+        $result = $this->em
             ->createQuery('SELECT f,p FROM AeFeatureBundle:Feature f JOIN f.parent p WHERE f.name = :name AND p.name = :parent')
             ->setParameters([
                 'name' => $name,
                 'parent' => $parent,
             ])
-            ->useResultCache(true, 3600 * 24, self::generateCacheKey($parent, $name))
             ->getSingleResult();
+
+        $this->cache->save($key, $result, 3600 * 24);
+
+        return $result;
     }
 
     /**
@@ -108,6 +119,7 @@ class FeatureManager
     public function update(Feature $feature, $andFlush = true)
     {
         $this->em->persist($feature);
+
         if ($andFlush) {
             $this->em->flush();
             $this->emptyCache($feature->getName(), $feature->getParent()->getName());
@@ -122,12 +134,17 @@ class FeatureManager
      */
     public function emptyCache($name, $parent)
     {
-        $cache = $this->em
-            ->getConfiguration()
-            ->getResultCacheImpl();
+        $this->cache->delete($this->generateCacheKey($parent, $name));
+    }
 
-        if ($cache instanceof Cache) {
-            $cache->delete(self::generateCacheKey($parent, $name));
-        }
+    /**
+     * @param string $parentName
+     * @param string $name
+     *
+     * @return string
+     */
+    private function generateCacheKey($parentName, $name)
+    {
+        return strtolower(sprintf('feature_%s_%s', $parentName, $name));
     }
 }
