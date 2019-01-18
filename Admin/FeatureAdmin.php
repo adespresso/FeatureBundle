@@ -31,6 +31,7 @@ class FeatureAdmin extends Admin
             ->add('id')
             ->add('name')
             ->add('role')
+            ->add('description')
             ->add('enabled')
             ->add('_action', 'actions', [
                 'actions' => [
@@ -58,7 +59,11 @@ class FeatureAdmin extends Admin
                 'choices' => array_combine($roles, $roles),
                 'multiple' => false,
                 'required' => false,
-            ]);
+            ])
+            ->add('description', 'text', [
+                'required' => false,
+            ])
+        ;
 
         if (!$this->getSubject()->getParent()) {
             $formMapper->add(

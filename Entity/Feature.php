@@ -57,6 +57,13 @@ class Feature
      */
     private $parent;
 
+    /**
+     * @var null|string
+     *
+     * @ORM\Column(nullable=true)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -185,5 +192,25 @@ class Feature
     public function isEnabled()
     {
         return $this->getEnabled() && ($this->getParent() ? $this->getParent()->getEnabled() : true);
+    }
+
+    /**
+     * Get description.
+     *
+     * @return null|string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set description.
+     *
+     * @param null|string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
     }
 }

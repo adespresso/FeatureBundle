@@ -78,6 +78,17 @@ class FeatureTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('ROLE_USER', $this->entity->getParentRole());
     }
 
+    public function testDescriptionField()
+    {
+        $this->assertNull($this->entity->getDescription());
+
+        $description = 'test description';
+
+        $this->entity->setDescription($description);
+
+        $this->assertEquals($description, $this->entity->getDescription());
+    }
+
     public function testGetParentRoleWithoutParent()
     {
         $this->assertNull($this->entity->getParentRole());
