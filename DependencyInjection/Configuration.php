@@ -20,6 +20,10 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('cache')
                     ->defaultValue('ae_feature.default_cache')
                 ->end()
+                ->scalarNode('provider_key')
+                    ->defaultValue('main')
+                    ->cannotBeEmpty()
+                ->end()
             ->end();
 
         return $treeBuilder;

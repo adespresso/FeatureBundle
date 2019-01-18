@@ -30,5 +30,6 @@ class AeFeatureExtension extends Extension
         $loader->load('services.xml');
 
         $container->setAlias('ae_feature.cache', $config['cache']);
+        $container->setParameter('ae_feature.provider_key', $config['provider_key']);
     }
 }

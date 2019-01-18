@@ -58,6 +58,7 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
                 'ae_feature.twig.extension.feature.class',
                 FeatureExtension::class,
             ],
+            ['ae_feature.provider_key', 'main'],
         ];
     }
 
@@ -140,5 +141,16 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
         ]);
 
         $this->assertContainerBuilderHasAlias('ae_feature.cache', 'service');
+    }
+
+    public function testKeyProviderCanBeDefined()
+    {
+        $providerKey = 'test_'.sha1(mt_rand());
+
+        $this->load([
+            'provider_key' => $providerKey,
+        ]);
+
+        $this->assertContainerBuilderHasParameter('ae_feature.provider_key', $providerKey);
     }
 }
