@@ -18,6 +18,8 @@
         </service>
         <service class="%ae_feature.security.class%" id="ae_feature.security" public="false">
             <argument id="security.authorization_checker" type="service"/>
+            <argument id="security.token_storage" type="service"/>
+            <argument>%ae_feature.provider_key%</argument>
         </service>
         <service class="%ae_feature.feature.class%" id="ae_feature.feature">
             <argument id="ae_feature.manager" type="service"/>

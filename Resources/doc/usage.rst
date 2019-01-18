@@ -21,5 +21,11 @@ or from the service directly:
         throw new Exception();
     }
 
+    // $user instanceof Symfony\Component\Security\Core\User\UserInterface
+    // after the check the previous token will be restored
+    if (!$featureService->isGrantedForUser('feature', 'group', $user)) {
+        throw new Exception();
+    }
+
 If the feature or the parent feature has at least a role, the `ae_feature.feature`
 service will require a token defined in the `security.token_storage`.
