@@ -27,29 +27,6 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
     }
 
     /**
-     * Test parameters "alias" to migrate from CreativeWeb to AdEspresso.
-     *
-     * @param string $parameterName
-     * @param string $expectedParameterValue
-     *
-     * @dataProvider parametersProvider
-     * @group legacy
-     */
-    public function testLegacyParameters(
-        $parameterName,
-        $expectedParameterValue
-    ) {
-        $this->load();
-        $this->compile();
-
-        $parameterName = 'cw'.substr($parameterName, 2);
-        $this->assertContainerBuilderHasParameter(
-            $parameterName,
-            $expectedParameterValue
-        );
-    }
-
-    /**
      * Test parameters.
      *
      * @param string $parameterName
