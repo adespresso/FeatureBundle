@@ -4,7 +4,14 @@ All Notable changes to `adespresso/feature-bundle` will be documented in this fi
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-## [Unreleased]
+## [2.0.0] - 2019-01-18
+### Added
+  * Added field description to `Feature` entity
+
+## [1.3.0] - 2018-05-04
+### Added
+  * Support to PHP7
+  * Add `FeatureInterface`
 
 ## [1.2.0] - 2017-03-23
 ### Added
