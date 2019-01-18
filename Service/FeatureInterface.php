@@ -2,6 +2,8 @@
 
 namespace Ae\FeatureBundle\Service;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * @author Simone Di Maulo <simone@adespresso.com>
  */
@@ -16,4 +18,6 @@ interface FeatureInterface
      * @return bool
      */
     public function isGranted($name, $parent);
+
+    public function isGrantedForUser(string $name, string $parent, UserInterface $user): bool;
 }
