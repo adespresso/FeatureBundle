@@ -164,6 +164,21 @@ class Feature
         return $this->role;
     }
 
+    public function hasRole(): bool
+    {
+        return !empty($this->role);
+    }
+
+    public function hasParentRole(): bool
+    {
+        return $this->parent instanceof self && $this->parent->hasRole();
+    }
+
+    public function requiresRoleCheck(): bool
+    {
+        return $this->hasRole() || $this->hasParentRole();
+    }
+
     public function getParentRole()
     {
         return $this->getParent() ? $this->getParent()->getRole() : null;
