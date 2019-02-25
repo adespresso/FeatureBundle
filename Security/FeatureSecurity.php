@@ -32,6 +32,12 @@ class FeatureSecurity
      */
     public function isGranted(Feature $feature)
     {
+        // feature is enabled without required roles
+        // there's no need to check on user roles
+        if (!$feature->requiresRoleCheck()) {
+            return $feature->isEnabled();
+        }
+
         if (null === $this->context) {
             return false;
         }

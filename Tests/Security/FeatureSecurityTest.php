@@ -53,6 +53,10 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(false));
+        $feature
+            ->expects($this->once())
+            ->method('requiresRoleCheck')
+            ->willReturn(true);
         $tests[] = [$feature, false];
 
         $feature = $this
@@ -62,6 +66,10 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('isEnabled')
             ->will($this->returnValue(true));
+        $feature
+            ->expects($this->once())
+            ->method('requiresRoleCheck')
+            ->willReturn(true);
         $tests[] = [$feature, true];
 
         $feature = $this
@@ -75,6 +83,10 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
             ->expects($this->atLeastOnce())
             ->method('getRole')
             ->will($this->returnValue('ROLE_USER'));
+        $feature
+            ->expects($this->once())
+            ->method('requiresRoleCheck')
+            ->willReturn(true);
         $tests[] = [$feature, true];
 
         $feature = $this
@@ -92,8 +104,56 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
             ->expects($this->atLeastOnce())
             ->method('getParentRole')
             ->will($this->returnValue('ROLE_ADMIN'));
+        $feature
+            ->expects($this->once())
+            ->method('requiresRoleCheck')
+            ->willReturn(true);
         $tests[] = [$feature, false];
 
         return $tests;
+    }
+
+    public function testFeaturesWithoutRolesEnabled()
+    {
+        $context = $this->createMock(AuthorizationCheckerInterface::class);
+        $context
+            ->expects($this->never())
+            ->method('isGranted');
+        $security = new FeatureSecurity($context);
+
+        $feature = $this->createMock(Feature::class);
+        $feature
+            ->expects($this->once())
+            ->method('isEnabled')
+            ->willReturn(true);
+
+        $feature
+            ->expects($this->once())
+            ->method('requiresRoleCheck')
+            ->willReturn(false);
+
+        $this->assertTrue($security->isGranted($feature));
+    }
+
+    public function testFeaturesWithoutRolesDisabled()
+    {
+        $context = $this->createMock(AuthorizationCheckerInterface::class);
+        $context
+            ->expects($this->never())
+            ->method('isGranted');
+        $security = new FeatureSecurity($context);
+
+        $feature = $this->createMock(Feature::class);
+        $feature
+            ->expects($this->once())
+            ->method('isEnabled')
+            ->willReturn(false);
+
+        $feature
+            ->expects($this->once())
+            ->method('requiresRoleCheck')
+            ->willReturn(false);
+
+        $this->assertFalse($security->isGranted($feature));
     }
 }

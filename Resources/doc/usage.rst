@@ -20,3 +20,6 @@ or from the service directly:
     if (!$featureService->isGranted('feature', 'group')) {
         throw new Exception();
     }
+
+If the feature or the parent feature has at least a role, the `ae_feature.feature`
+service will require a token defined in the `security.token_storage`.

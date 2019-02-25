@@ -93,4 +93,47 @@ class FeatureTest extends PHPUnit_Framework_TestCase
     {
         $this->assertNull($this->entity->getParentRole());
     }
+
+    public function testHasRole()
+    {
+        $this->assertFalse($this->entity->hasRole());
+
+        $this->entity->setRole('ROLE_USER');
+        $this->assertTrue($this->entity->hasRole());
+    }
+
+    public function testHasParentRole()
+    {
+        $this->assertFalse($this->entity->hasParentRole());
+
+        $parent = new Feature();
+        $this->entity->setParent($parent);
+
+        $this->assertFalse($this->entity->hasParentRole());
+
+        $parent->setRole('ROLE_USER');
+        $this->assertTrue($this->entity->hasParentRole());
+    }
+
+    public function testRequiresRoleCheck()
+    {
+        $this->assertFalse($this->entity->requiresRoleCheck());
+
+        $parent = new Feature();
+        $this->entity->setParent($parent);
+        $this->assertFalse($this->entity->requiresRoleCheck());
+
+        $parent->setRole('ROLE1');
+        $this->assertTrue($this->entity->requiresRoleCheck());
+
+        $this->entity->setRole('ROLE1');
+        $this->entity->setParent(new Feature());
+        $this->assertTrue($this->entity->requiresRoleCheck());
+
+        $parent = new Feature();
+        $parent->setRole('ROLE2');
+        $this->entity->setParent($parent);
+        $this->entity->setRole('ROLE1');
+        $this->assertTrue($this->entity->requiresRoleCheck());
+    }
 }
