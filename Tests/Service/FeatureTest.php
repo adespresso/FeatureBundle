@@ -7,6 +7,7 @@ use Ae\FeatureBundle\Entity\FeatureManager;
 use Ae\FeatureBundle\Security\FeatureSecurity;
 use Ae\FeatureBundle\Service\Feature as FeatureService;
 use PHPUnit_Framework_TestCase;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
@@ -71,5 +72,41 @@ class FeatureTest extends PHPUnit_Framework_TestCase
             ]));
 
         $this->assertFalse($this->service->isGranted('featureB', 'group'));
+    }
+
+    /**
+     * @dataProvider isGrantedForUserDataProvider
+     */
+    public function testIsGrantedForUser($expected, $feature)
+    {
+        $name = sha1(mt_rand());
+        $parent = sha1(mt_rand());
+        $user = $this->createMock(UserInterface::class);
+
+        $this->manager
+            ->expects($this->once())
+            ->method('find')
+            ->with($name, $parent)
+            ->willReturn($feature);
+
+        $this->security
+            ->expects($expected ? $this->once() : $this->any())
+            ->method('isGrantedForUser')
+            ->with($feature, $user)
+            ->willReturn($expected);
+
+        $this->assertSame($expected, $this->service->isGrantedForUser($name, $parent, $user));
+    }
+
+    /**
+     * @return array
+     */
+    public function isGrantedForUserDataProvider()
+    {
+        return [
+            'granted' => [true, $this->createMock(Feature::class)],
+            'not granted' => [false, $this->createMock(Feature::class)],
+            'no feature' => [false, null],
+        ];
     }
 }

@@ -3,7 +3,10 @@
 namespace Ae\FeatureBundle\Security;
 
 use Ae\FeatureBundle\Entity\Feature;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Controls access to a Feature.
@@ -13,16 +16,33 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class FeatureSecurity
 {
     /**
-     * @param AuthorizationCheckerInterface|null
+     * @param AuthorizationCheckerInterface
      */
     protected $context;
 
     /**
-     * @param AuthorizationCheckerInterface $context
+     * @param TokenStorageInterface
      */
-    public function __construct(AuthorizationCheckerInterface $context = null)
-    {
+    private $storage;
+
+    /**
+     * @param string
+     */
+    private $providerKey;
+
+    /**
+     * @param AuthorizationCheckerInterface $context
+     * @param TokenStorageInterface         $storage
+     * @param string                        $providerKey
+     */
+    public function __construct(
+        AuthorizationCheckerInterface $context,
+        TokenStorageInterface $storage,
+        string $providerKey
+    ) {
         $this->context = $context;
+        $this->storage = $storage;
+        $this->providerKey = $providerKey;
     }
 
     /**
@@ -36,10 +56,6 @@ class FeatureSecurity
         // there's no need to check on user roles
         if (!$feature->requiresRoleCheck()) {
             return $feature->isEnabled();
-        }
-
-        if (null === $this->context) {
-            return false;
         }
 
         if (!$feature->isEnabled()) {
@@ -59,5 +75,23 @@ class FeatureSecurity
         }
 
         return true;
+    }
+
+    public function isGrantedForUser(Feature $feature, UserInterface $user): bool
+    {
+        $oldToken = $this->storage->getToken();
+
+        $this->storage->setToken(new UsernamePasswordToken(
+            $user,
+            null,
+            $this->providerKey,
+            $user->getRoles()
+        ));
+
+        $granted = $this->isGranted($feature);
+
+        $this->storage->setToken($oldToken);
+
+        return $granted;
     }
 }

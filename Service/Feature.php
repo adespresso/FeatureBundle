@@ -2,9 +2,11 @@
 
 namespace Ae\FeatureBundle\Service;
 
+use Ae\FeatureBundle\Entity\Feature as FeatureEntity;
 use Ae\FeatureBundle\Entity\FeatureManager;
 use Ae\FeatureBundle\Security\FeatureSecurity;
 use Exception;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
@@ -50,5 +52,16 @@ class Feature implements FeatureInterface
         } catch (Exception $exception) {
             return false;
         }
+    }
+
+    public function isGrantedForUser(string $name, string $parent, UserInterface $user): bool
+    {
+        $feature = $this->manager->find($name, $parent);
+
+        if (!$feature instanceof FeatureEntity) {
+            return false;
+        }
+
+        return $this->security->isGrantedForUser($feature, $user);
     }
 }
