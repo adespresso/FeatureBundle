@@ -8,7 +8,7 @@ filter:
         - 'Tests/*'
 build_failure_conditions:
     - 'elements.rating(< D).new.exists'
-    - 'project.metric_change("scrutinizer.test_coverage", < -0.01)'
+    - 'project.metric_change("scrutinizer.test_coverage", < 0)'
 build:
     environment:
         php: '7.1'
