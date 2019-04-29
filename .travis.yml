@@ -10,18 +10,24 @@ php:
   - 7.1
   - 7.2
 
-matrix:
-  fast_finish: true
-
-install:
+before_install:
   - composer require --no-update roave/security-advisories:dev-master
-  - composer install -n --no-progress
+
+jobs:
+  include:
+    - name: Default Installation
+      install:
+        - composer install -n --no-progress
+
+    - name: Minimum Requirements
+      install:
+        - composer update -n --no-progress --prefer-lowest
 
 before_script:
   - vendor/bin/php-cs-fixer --diff --dry-run -v fix
 
 script:
-  - SYMFONY_DEPRECATIONS_HELPER=weak vendor/bin/phpunit -v
+  - vendor/bin/phpunit -v
 
 notifications:
   email: false
