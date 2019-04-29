@@ -6,10 +6,6 @@ cache:
   directories:
     - $HOME/.composer/cache/files
 
-php:
-  - 7.1
-  - 7.2
-
 before_install:
   - composer require --no-update roave/security-advisories:dev-master
 
@@ -19,9 +15,17 @@ jobs:
       install:
         - composer install -n --no-progress
 
+      php:
+        - 7.1
+        - 7.2
+
     - name: Minimum Requirements
       install:
         - composer update -n --no-progress --prefer-lowest
+
+      php:
+        - 7.1
+        - 7.2
 
 before_script:
   - vendor/bin/php-cs-fixer --diff --dry-run -v fix
