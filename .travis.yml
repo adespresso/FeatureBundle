@@ -23,8 +23,5 @@ before_script:
 script:
   - SYMFONY_DEPRECATIONS_HELPER=weak vendor/bin/phpunit -v
 
-after_success:
-  - 'if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_BRANCH == "master" && $TRAVIS_PHP_VERSION == "7.1" ]]; then sh generate-api.sh; fi;'
-
 notifications:
   email: false

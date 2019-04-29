@@ -6,8 +6,6 @@
 
 This bundle manage release of new features to specific subsets of users.
 
-API: [adespresso.github.io/FeatureBundle](https://adespresso.github.io/FeatureBundle/)
-
 ## Install
 
 Via Composer
