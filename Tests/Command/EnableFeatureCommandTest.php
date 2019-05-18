@@ -7,7 +7,6 @@ use Ae\FeatureBundle\Entity\Feature;
 use Ae\FeatureBundle\Entity\FeatureManager;
 use Doctrine\ORM\EntityManager;
 use PHPUnit_Framework_TestCase;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
