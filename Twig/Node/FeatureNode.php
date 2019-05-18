@@ -3,11 +3,12 @@
 namespace Ae\FeatureBundle\Twig\Node;
 
 use Ae\FeatureBundle\Twig\Extension\FeatureExtension;
+use Twig_Compiler;
 use Twig_Environment;
 use Twig_Node;
+use Twig_Node_Expression;
 use Twig_Node_Expression_Array;
 use Twig_Node_Expression_Constant;
-use Twig_Node_Expression_ExtensionReference;
 use Twig_Node_Expression_MethodCall;
 use Twig_Node_If;
 
@@ -28,13 +29,20 @@ class FeatureNode extends Twig_Node_If
 
     protected function createExpression($name, $parent, $lineno)
     {
+        $newName = version_compare(Twig_Environment::VERSION, '1.26.0', '>=')
+            ? FeatureExtension::class
+            : 'feature';
+
         return new Twig_Node_Expression_MethodCall(
-            new Twig_Node_Expression_ExtensionReference(
-                version_compare(Twig_Environment::VERSION, '1.26.0', '>=')
-                    ? FeatureExtension::class
-                    : 'feature',
-                $lineno
-            ),
+            new class([], ['name' => $newName], $lineno) extends Twig_Node_Expression {
+                public function compile(Twig_Compiler $compiler)
+                {
+                    $compiler->raw(sprintf(
+                        '$this->env->getExtension(\'%s\')',
+                        $this->getAttribute('name')
+                    ));
+                }
+            },
             'isGranted',
             new Twig_Node_Expression_Array(
                 [
