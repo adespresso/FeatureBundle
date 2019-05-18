@@ -3,28 +3,41 @@ language: php
 sudo: false
 
 cache:
-  directories:
-    - $HOME/.composer/cache/files
+    directories:
+        - $HOME/.composer/cache/files
 
-php:
-  - 7.1
-  - 7.2
+php: 7.1
 
 matrix:
-  fast_finish: true
-
-install:
-  - composer require --no-update roave/security-advisories:dev-master
-  - composer install -n --no-progress
+    fast_finish: true
 
 before_script:
-  - vendor/bin/php-cs-fixer --diff --dry-run -v fix
+    - vendor/bin/php-cs-fixer --diff --dry-run -v fix
 
 script:
-  - SYMFONY_DEPRECATIONS_HELPER=weak vendor/bin/phpunit -v
+    - vendor/bin/phpunit -v
 
 after_success:
-  - 'if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_BRANCH == "master" && $TRAVIS_PHP_VERSION == "7.1" ]]; then sh generate-api.sh; fi;'
+    - 'if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_BRANCH == "master" && $TRAVIS_PHP_VERSION == "7.1" ]]; then sh generate-api.sh; fi;'
 
 notifications:
-  email: false
+    email: false
+
+jobs:
+    include:
+        -
+            name: 'Default installation - PHP 7.1'
+            install:
+                - composer install -n --no-progress
+
+        -
+            name: 'Default installation - PHP 7.2'
+            php: 7.2
+            install:
+                - composer install -n --no-progress
+
+        -
+            name: 'Installation with minimum requirements'
+            install:
+                - phpenv config-rm xdebug.ini
+                - composer update -n --no-progress --prefer-lowest
