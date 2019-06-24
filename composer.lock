@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "8dd65f8dd30ef7589b81171a6a93a602",
@@ -390,12 +390,12 @@
             "version": "2.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/doctrine2.git",
+                "url": "https://github.com/doctrine/orm.git",
                 "reference": "b5e19dca182ee4c21dd26d14b2d707cd4ad4e95e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/b5e19dca182ee4c21dd26d14b2d707cd4ad4e95e",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/b5e19dca182ee4c21dd26d14b2d707cd4ad4e95e",
                 "reference": "b5e19dca182ee4c21dd26d14b2d707cd4ad4e95e",
                 "shasum": ""
             },
@@ -429,23 +429,20 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com",
-                    "homepage": "http://www.jwage.com/",
-                    "role": "Creator"
-                },
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com",
-                    "homepage": "http://www.instaclick.com"
-                },
-                {
                     "name": "Roman Borschel",
                     "email": "roman@code-factory.org"
                 },
                 {
                     "name": "Benjamin Eberlei",
                     "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
                 }
             ],
             "description": "Object-Relational-Mapper for PHP",
@@ -2059,25 +2056,28 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.0.0",
+            "version": "v1.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "0b6a8940385311a24e060ec1fe35680e17c74497"
+                "reference": "fe5e94c604826c35a32fa832f35bd036b6799609"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/0b6a8940385311a24e060ec1fe35680e17c74497",
-                "reference": "0b6a8940385311a24e060ec1fe35680e17c74497",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/fe5e94c604826c35a32fa832f35bd036b6799609",
+                "reference": "fe5e94c604826c35a32fa832f35bd036b6799609",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.11-dev"
                 }
             },
             "autoload": {
@@ -2111,7 +2111,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2015-11-04T20:28:58+00:00"
+            "time": "2019-02-06T07:57:58+00:00"
         },
         {
             "name": "symfony/property-access",
@@ -2583,16 +2583,16 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v2.8.0",
+            "version": "v2.8.50",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "6772657767649fc3b31df12705194fb4af11ef98"
+                "reference": "fc58c2a19e56c29f5ba2736ec40d0119a0de2089"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/6772657767649fc3b31df12705194fb4af11ef98",
-                "reference": "6772657767649fc3b31df12705194fb4af11ef98",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/fc58c2a19e56c29f5ba2736ec40d0119a0de2089",
+                "reference": "fc58c2a19e56c29f5ba2736ec40d0119a0de2089",
                 "shasum": ""
             },
             "require": {
@@ -2605,11 +2605,11 @@
             "require-dev": {
                 "psr/log": "~1.0",
                 "symfony/config": "~2.8",
-                "symfony/intl": "~2.4|~3.0.0",
+                "symfony/intl": "~2.7.25|^2.8.18|~3.2.5",
                 "symfony/yaml": "~2.2|~3.0.0"
             },
             "suggest": {
-                "psr/log": "To use logging capability in translator",
+                "psr/log-implementation": "To use logging capability in translator",
                 "symfony/config": "",
                 "symfony/yaml": ""
             },
@@ -2643,7 +2643,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-11-18T13:45:00+00:00"
+            "time": "2018-11-24T21:16:41+00:00"
         },
         {
             "name": "symfony/twig-bridge",
@@ -2789,46 +2789,59 @@
         },
         {
             "name": "symfony/validator",
-            "version": "v2.3.0",
-            "target-dir": "Symfony/Component/Validator",
+            "version": "v2.8.50",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/validator.git",
-                "reference": "7e9dc9ed2d6e4798983626c33125373db835d6f9"
+                "reference": "d5d2090bba3139d8ddb79959fbf516e87238fe3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/validator/zipball/7e9dc9ed2d6e4798983626c33125373db835d6f9",
-                "reference": "7e9dc9ed2d6e4798983626c33125373db835d6f9",
+                "url": "https://api.github.com/repos/symfony/validator/zipball/d5d2090bba3139d8ddb79959fbf516e87238fe3a",
+                "reference": "d5d2090bba3139d8ddb79959fbf516e87238fe3a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3",
-                "symfony/translation": "~2.0"
+                "php": ">=5.3.9",
+                "symfony/polyfill-ctype": "~1.8",
+                "symfony/polyfill-mbstring": "~1.0",
+                "symfony/translation": "~2.4|~3.0.0"
             },
             "require-dev": {
-                "symfony/config": "~2.2",
-                "symfony/http-foundation": "~2.1",
-                "symfony/intl": "~2.3",
-                "symfony/yaml": "~2.0"
+                "doctrine/annotations": "~1.0",
+                "doctrine/cache": "~1.0",
+                "egulias/email-validator": "^1.2.1",
+                "symfony/config": "~2.2|~3.0.0",
+                "symfony/expression-language": "~2.4|~3.0.0",
+                "symfony/http-foundation": "~2.3|~3.0.0",
+                "symfony/intl": "~2.7.25|^2.8.18|~3.2.5",
+                "symfony/property-access": "~2.3|~3.0.0",
+                "symfony/yaml": "^2.0.5|~3.0.0"
             },
             "suggest": {
-                "doctrine/common": "",
+                "doctrine/annotations": "For using the annotation mapping. You will also need doctrine/cache.",
+                "doctrine/cache": "For using the default cached annotation reader and metadata cache.",
+                "egulias/email-validator": "Strict (RFC compliant) email validation",
                 "symfony/config": "",
+                "symfony/expression-language": "For using the 2.4 Expression validator",
                 "symfony/http-foundation": "",
                 "symfony/intl": "",
+                "symfony/property-access": "For using the 2.4 Validator API",
                 "symfony/yaml": ""
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.3-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
+                "psr-4": {
                     "Symfony\\Component\\Validator\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2836,17 +2849,17 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "Symfony Validator Component",
-            "homepage": "http://symfony.com",
-            "time": "2013-06-02T12:05:51+00:00"
+            "homepage": "https://symfony.com",
+            "time": "2018-11-14T14:06:48+00:00"
         },
         {
             "name": "twig/extensions",
@@ -3811,6 +3824,7 @@
                 "mock",
                 "xunit"
             ],
+            "abandoned": true,
             "time": "2017-06-30T09:13:00+00:00"
         },
         {
