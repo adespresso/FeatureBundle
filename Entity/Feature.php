@@ -58,7 +58,7 @@ class Feature
     private $parent;
 
     /**
-     * @var null|string
+     * @var string|null
      *
      * @ORM\Column(nullable=true)
      */
@@ -212,7 +212,7 @@ class Feature
     /**
      * Get description.
      *
-     * @return null|string
+     * @return string|null
      */
     public function getDescription()
     {
@@ -222,7 +222,7 @@ class Feature
     /**
      * Set description.
      *
-     * @param null|string $description
+     * @param string|null $description
      */
     public function setDescription($description)
     {

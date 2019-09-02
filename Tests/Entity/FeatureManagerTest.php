@@ -5,7 +5,6 @@ namespace Ae\FeatureBundle\Tests\Entity;
 use Ae\FeatureBundle\Entity\Feature;
 use Ae\FeatureBundle\Entity\FeatureManager;
 use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\Common\Cache\Cache;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManager;
 use PHPUnit_Framework_TestCase;
