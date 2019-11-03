@@ -2,6 +2,8 @@
 
 namespace Ae\FeatureBundle\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -63,6 +65,13 @@ class Feature
      * @ORM\Column(nullable=true)
      */
     private $description;
+
+    /**
+     * @var DateTimeInterface|null
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $expiration;
 
     public function __construct()
     {
@@ -223,5 +232,26 @@ class Feature
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function setExpiration(?DateTimeInterface $expiration)
+    {
+        $this->expiration = $expiration;
+    }
+
+    public function hasExpiration(): bool
+    {
+        return $this->expiration instanceof DateTimeInterface;
+    }
+
+    public function getExpiration(): ?DateTimeInterface
+    {
+        return $this->expiration;
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->hasExpiration()
+            && $this->expiration < new DateTime();
     }
 }
