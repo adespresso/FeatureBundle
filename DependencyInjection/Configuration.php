@@ -24,6 +24,7 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('main')
                     ->cannotBeEmpty()
                 ->end()
+                ->scalarNode('expiration_logger')->end()
             ->end();
 
         return $treeBuilder;

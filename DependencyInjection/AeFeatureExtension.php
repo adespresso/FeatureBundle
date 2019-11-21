@@ -31,5 +31,11 @@ class AeFeatureExtension extends Extension
 
         $container->setAlias('ae_feature.cache', $config['cache']);
         $container->setParameter('ae_feature.provider_key', $config['provider_key']);
+
+        if (!empty($config['expiration_logger'])) {
+            $container
+                ->getDefinition('ae_feature.security')
+                ->addMethodCall('setLogger', [$config['expiration_logger']]);
+        }
     }
 }
