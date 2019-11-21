@@ -5,6 +5,7 @@ namespace Ae\FeatureBundle\Twig\Extension;
 use Ae\FeatureBundle\Service\Feature;
 use Ae\FeatureBundle\Twig\TokenParser\FeatureTokenParser;
 use Twig_Extension;
+use Twig_SimpleTest;
 
 /**
  * @author Carlo Forghieri <carlo@adespresso.com>
@@ -31,6 +32,18 @@ class FeatureExtension extends Twig_Extension
     {
         return [
             new FeatureTokenParser(),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTests()
+    {
+        return [
+            new Twig_SimpleTest('granted feature', function (array $arguments) {
+                return $this->isGranted(...$arguments);
+            }),
         ];
     }
 

@@ -11,6 +11,9 @@ You can use this bundle from your Twig templates:
         feature disabled {# this will be the output #}
     {% endfeature %}
 
+    {# or using twig tests #}
+    feature {{ ['feature', 'group'] is granted feature ? 'enabled' : 'disabled' }}
+
 or from the service directly:
 
 .. code-block:: php
