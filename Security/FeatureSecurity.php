@@ -3,6 +3,9 @@
 namespace Ae\FeatureBundle\Security;
 
 use Ae\FeatureBundle\Entity\Feature;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -13,8 +16,10 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @author Carlo Forghieri <carlo@adespresso.com>
  */
-class FeatureSecurity
+class FeatureSecurity implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     /**
      * @param AuthorizationCheckerInterface
      */
@@ -38,6 +43,7 @@ class FeatureSecurity
         $this->context = $context;
         $this->storage = $storage;
         $this->providerKey = $providerKey;
+        $this->logger = new NullLogger();
     }
 
     /**
@@ -45,6 +51,22 @@ class FeatureSecurity
      */
     public function isGranted(Feature $feature)
     {
+        if ($feature->isExpired()) {
+            $message = sprintf(
+                'The feature "%s.%s" class is deprecated since %s and should be removed.',
+                $feature
+                    ->getParent()
+                    ->getName(),
+                $feature->getName(),
+                $feature
+                    ->getExpiration()
+                    ->format('Y-m-d')
+            );
+
+            @trigger_error($message, E_USER_DEPRECATED);
+            $this->logger->warning($message);
+        }
+
         // feature is enabled without required roles
         // there's no need to check on user roles
         if (!$feature->requiresRoleCheck()) {
