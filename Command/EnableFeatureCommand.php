@@ -83,5 +83,7 @@ class EnableFeatureCommand extends Command
         $this->featureManager->emptyCache($name, $parent);
 
         $output->writeln('OK');
+
+        return 0;
     }
 }
