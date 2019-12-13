@@ -81,19 +81,19 @@ class LoadFeatureCommand extends ContainerAwareCommand
         }
 
         if ($input->getOption('dry-run')) {
-            return;
+            return 0;
         }
 
         $manager = $container->get('ae_feature.manager');
         foreach ($found as $tag) {
             $manager->findOrCreate($tag['name'], $tag['parent']);
         }
+
+        return 0;
     }
 
     /**
      * Find feature nodes.
-     *
-     * @param Twig_Node $node
      *
      * @return array
      */

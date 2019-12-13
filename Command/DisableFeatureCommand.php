@@ -26,10 +26,6 @@ class DisableFeatureCommand extends Command
      */
     private $entityManager;
 
-    /**
-     * @param FeatureManager $featureManager
-     * @param EntityManager  $entityManager
-     */
     public function __construct(
         FeatureManager $featureManager,
         EntityManager $entityManager
@@ -76,5 +72,7 @@ class DisableFeatureCommand extends Command
         $this->featureManager->emptyCache($name, $parent);
 
         $output->writeln('OK');
+
+        return 0;
     }
 }

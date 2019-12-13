@@ -1,0 +1,20 @@
+--TEST--
+"granted feature" test
+--TEMPLATE--
+===
+{% if ['featureA', 'group'] is granted feature %}
+  featureA
+{% endif %}
+===
+{% if ['featureB', 'group'] is granted feature %}
+  featureB
+{% endif %}
+===
+
+--DATA--
+return array()
+--EXPECT--
+===
+  featureA
+===
+===
