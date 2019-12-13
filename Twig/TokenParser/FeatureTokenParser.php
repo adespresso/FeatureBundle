@@ -31,18 +31,14 @@ class FeatureTokenParser extends Twig_TokenParser
                 // {% feature "name" %}
                 $name = $stream->next()->getValue();
             } elseif (!$stream->test(Twig_Token::BLOCK_END_TYPE)) {
-                throw new Twig_Error_Syntax(
-                    'Unexpected token. Twig was looking for the "name" string.'
-                );
+                throw new Twig_Error_Syntax('Unexpected token. Twig was looking for the "name" string.');
             }
             if ($stream->test('from')) {
                 // {% feature "name" from "parent" %}
                 $stream->next();
                 $parent = $stream->next()->getValue();
             } elseif (!$stream->test(Twig_Token::BLOCK_END_TYPE)) {
-                throw new Twig_Error_Syntax(
-                    'Unexpected token. Twig was looking for the "from" keyword.'
-                );
+                throw new Twig_Error_Syntax('Unexpected token. Twig was looking for the "from" keyword.');
             }
         }
 
@@ -64,15 +60,7 @@ class FeatureTokenParser extends Twig_TokenParser
                     break;
 
                 default:
-                    throw new Twig_Error_Syntax(
-                        sprintf(
-                            'Unexpected end of template. Twig was looking for '.
-                            'the following tags "else" or "endfeature" to '.
-                            'close the "feature" block started at line %d)',
-                            $lineno
-                        ),
-                        -1
-                    );
+                    throw new Twig_Error_Syntax(sprintf('Unexpected end of template. Twig was looking for the following tags "else" or "endfeature" to close the "feature" block started at line %d)', $lineno), -1);
             }
         }
 

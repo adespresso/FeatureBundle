@@ -93,8 +93,6 @@ class LoadFeatureCommand extends ContainerAwareCommand
     /**
      * Find feature nodes.
      *
-     * @param Twig_Node $node
-     *
      * @return array
      */
     private function findFeatureNodes(Twig_Node $node)

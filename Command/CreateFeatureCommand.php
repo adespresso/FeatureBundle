@@ -27,10 +27,6 @@ class CreateFeatureCommand extends Command
      */
     private $entityManager;
 
-    /**
-     * @param FeatureManager $featureManager
-     * @param EntityManager  $entityManager
-     */
     public function __construct(
         FeatureManager $featureManager,
         EntityManager $entityManager

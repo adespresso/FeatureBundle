@@ -30,11 +30,6 @@ class FeatureSecurity
      */
     private $providerKey;
 
-    /**
-     * @param AuthorizationCheckerInterface $context
-     * @param TokenStorageInterface         $storage
-     * @param string                        $providerKey
-     */
     public function __construct(
         AuthorizationCheckerInterface $context,
         TokenStorageInterface $storage,
@@ -46,8 +41,6 @@ class FeatureSecurity
     }
 
     /**
-     * @param Feature $feature
-     *
      * @return bool
      */
     public function isGranted(Feature $feature)

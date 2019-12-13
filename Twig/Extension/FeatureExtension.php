@@ -17,9 +17,6 @@ class FeatureExtension extends Twig_Extension
      */
     protected $service;
 
-    /**
-     * @param Feature $service
-     */
     public function __construct(Feature $service)
     {
         $this->service = $service;

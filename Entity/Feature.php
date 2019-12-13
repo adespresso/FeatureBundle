@@ -86,8 +86,6 @@ class Feature
 
     /**
      * Set parent.
-     *
-     * @param Feature $parent
      */
     public function setParent(Feature $parent)
     {
@@ -186,8 +184,6 @@ class Feature
 
     /**
      * Add children.
-     *
-     * @param Feature $children
      */
     public function addFeature(Feature $children)
     {

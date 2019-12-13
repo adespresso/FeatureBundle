@@ -23,10 +23,6 @@ class Feature implements FeatureInterface
      */
     protected $security;
 
-    /**
-     * @param FeatureManager  $manager
-     * @param FeatureSecurity $security
-     */
     public function __construct(
         FeatureManager $manager,
         FeatureSecurity $security

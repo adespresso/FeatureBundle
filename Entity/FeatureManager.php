@@ -21,10 +21,6 @@ class FeatureManager
      */
     private $cache;
 
-    /**
-     * @param EntityManager $em
-     * @param Cache         $cache
-     */
     public function __construct(EntityManager $em, Cache $cache)
     {
         $this->em = $em;
@@ -113,8 +109,7 @@ class FeatureManager
     }
 
     /**
-     * @param Feature $feature
-     * @param bool    $andFlush
+     * @param bool $andFlush
      */
     public function update(Feature $feature, $andFlush = true)
     {
