@@ -37,6 +37,12 @@ jobs:
                 - composer install -n --no-progress
 
         -
+            name: 'Default installation - PHP 7.3'
+            php: 7.3
+            install:
+                - composer install -n --no-progress
+
+        -
             name: 'Installation with minimum requirements'
             install:
                 - phpenv config-rm xdebug.ini
