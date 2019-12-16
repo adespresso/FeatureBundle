@@ -5,6 +5,7 @@ namespace Ae\FeatureBundle\Tests\Security;
 use Ae\FeatureBundle\Entity\Feature;
 use Ae\FeatureBundle\Security\FeatureSecurity;
 use PHPUnit_Framework_TestCase;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -224,6 +225,13 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
             ->method('requiresRoleCheck')
             ->willReturn(false);
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->never())
+            ->method('warning');
+
+        $security->setLogger($logger);
+
         $this->assertTrue($security->isGranted($feature));
     }
 
@@ -238,6 +246,13 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
             ->method('isGranted');
         $security = new FeatureSecurity($context, $storage, $providerKey);
 
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->never())
+            ->method('warning');
+
+        $security->setLogger($logger);
+
         $feature = $this->createMock(Feature::class);
         $feature
             ->expects($this->once())
@@ -250,5 +265,30 @@ class FeatureSecurityTest extends PHPUnit_Framework_TestCase
             ->willReturn(false);
 
         $this->assertFalse($security->isGranted($feature));
+    }
+
+    /**
+     * @group legacy
+     *
+     * @expectedDeprecation The feature "%s.%s" class is deprecated since %s and should be removed.
+     */
+    public function testLogExpiredFeature()
+    {
+        $parent = new Feature();
+        $parent->setName('parent');
+
+        $feature = new Feature();
+        $feature->setParent($parent);
+        $feature->setName('feature');
+        $feature->setExpiration(new \DateTime('1970-01-01 00:00:00'));
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $logger
+            ->expects($this->once())
+            ->method('warning')
+            ->with('The feature "parent.feature" class is deprecated since 1970-01-01 and should be removed.');
+
+        $this->security->setLogger($logger);
+        $this->security->isGranted($feature);
     }
 }

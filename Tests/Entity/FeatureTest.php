@@ -3,6 +3,7 @@
 namespace Ae\FeatureBundle\Tests\Entity;
 
 use Ae\FeatureBundle\Entity\Feature;
+use DateTime;
 use Doctrine\Common\Collections\Collection;
 use PHPUnit_Framework_TestCase;
 
@@ -135,5 +136,34 @@ class FeatureTest extends PHPUnit_Framework_TestCase
         $this->entity->setParent($parent);
         $this->entity->setRole('ROLE1');
         $this->assertTrue($this->entity->requiresRoleCheck());
+    }
+
+    public function testExpiration()
+    {
+        $feature = new Feature();
+
+        $this->assertFalse($feature->hasExpiration());
+        $this->assertFalse($feature->isExpired());
+        $this->assertNull($feature->getExpiration());
+
+        $expiration = new DateTime('now - 2 days');
+        $feature->setExpiration($expiration);
+
+        $this->assertTrue($feature->hasExpiration());
+        $this->assertTrue($feature->isExpired());
+        $this->assertEquals($expiration, $feature->getExpiration());
+
+        $expiration = new DateTime('now + 2 days');
+        $feature->setExpiration($expiration);
+
+        $this->assertTrue($feature->hasExpiration());
+        $this->assertFalse($feature->isExpired());
+        $this->assertEquals($expiration, $feature->getExpiration());
+
+        $feature->setExpiration(null);
+
+        $this->assertFalse($feature->hasExpiration());
+        $this->assertFalse($feature->isExpired());
+        $this->assertNull($feature->getExpiration());
     }
 }

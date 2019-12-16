@@ -153,4 +153,19 @@ class AeFeatureExtensionTest extends AbstractExtensionTestCase
 
         $this->assertContainerBuilderHasParameter('ae_feature.provider_key', $providerKey);
     }
+
+    public function testExpirationLoggerConfiguration()
+    {
+        $this->load([
+            'expiration_logger' => 'service',
+        ]);
+
+        $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
+            'ae_feature.security',
+            'setLogger',
+            [
+                'service',
+            ]
+        );
+    }
 }
